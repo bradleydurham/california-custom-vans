@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — California Custom Vans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0c0a;
+      --surface:   #161311;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #e8e0d6;
+      --muted:     #7a7268;
+      --accent:    #c8571b;
+      --accent-lt: #e0673a;
+      --nav-h:     72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    p + p { margin-top: 1.25em; }
+    p { line-height: 1.4; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 0 rgba(200,87,27,0.15), 0 4px 32px rgba(0,0,0,0.5);
+      transition: background 0.3s;
+    }
+
+    .nav.scrolled {
+      background: rgba(14,12,10,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav__inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      text-decoration: none;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .nav__logo-primary {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .nav__logo-slash {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--accent);
+      line-height: 1;
+      margin: 0 4px;
+    }
+
+    .nav__logo-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      align-self: center;
+      padding-top: 2px;
+      transition: color 0.2s;
+    }
+
+    .nav__logo:hover .nav__logo-primary { color: #fff; }
+    .nav__logo:hover .nav__logo-sub     { color: var(--text); }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      list-style: none;
+    }
+
+    .nav__links a {
+      position: relative;
+      display: block;
+      padding: 8px 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 18px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .nav__links a:hover,
+    .nav__links a.active { color: var(--text); }
+
+    .nav__links a:hover::after,
+    .nav__links a.active::after { width: calc(100% - 36px); }
+
+    /* ── dropdown ── */
+    .nav__dropdown-wrap {
+      position: relative;
+    }
+
+    .nav__dropdown-wrap > a::before {
+      content: '';
+      display: inline-block;
+      width: 0; height: 0;
+      border-left: 3.5px solid transparent;
+      border-right: 3.5px solid transparent;
+      border-top: 4px solid currentColor;
+      margin-left: 6px;
+      vertical-align: middle;
+      opacity: 0.5;
+      transition: transform 0.2s, opacity 0.2s;
+      position: relative;
+      top: -1px;
+    }
+
+    .nav__dropdown-wrap:hover > a::before {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+
+    /* suppress the sweep-underline ::after on the dropdown trigger */
+    .nav__dropdown-wrap > a::after { display: none; }
+
+    .nav__dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 200px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+      list-style: none;
+      padding: 8px 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.2s cubic-bezier(0.4,0,0.2,1),
+                  visibility 0.2s;
+      z-index: 200;
+    }
+
+    .nav__dropdown-wrap:hover .nav__dropdown,
+    .nav__dropdown-wrap:focus-within .nav__dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav__dropdown li a {
+      display: block;
+      padding: 9px 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.15s, padding-left 0.15s, background 0.15s;
+    }
+
+    .nav__dropdown li a::after { display: none !important; }
+
+    .nav__dropdown li a:hover {
+      color: var(--text);
+      padding-left: 26px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .nav__dropdown li + li {
+      border-top: 1px solid var(--border);
+    }
+
+    .nav__links .nav__cta a {
+      margin-left: 12px;
+      padding: 8px 20px;
+      color: var(--accent);
+      border: 1px solid rgba(200,87,27,0.35);
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+
+    .nav__links .nav__cta a::after { display: none; }
+
+    .nav__links .nav__cta a:hover {
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .nav__burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+
+    .nav__burger span {
+      display: block;
+      height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s, width 0.3s;
+    }
+
+    .nav__burger span:nth-child(1) { width: 24px; }
+    .nav__burger span:nth-child(2) { width: 18px; }
+    .nav__burger span:nth-child(3) { width: 24px; }
+
+    .nav__burger[aria-expanded="true"] span:nth-child(1) { width: 24px; transform: translateY(6.5px) rotate(45deg); }
+    .nav__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__burger[aria-expanded="true"] span:nth-child(3) { width: 24px; transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ══════════════════════════════════════════
+       MOBILE DRAWER
+    ══════════════════════════════════════════ */
+    .nav__drawer {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
+      z-index: 999;
+    }
+
+    .nav__drawer.open { max-height: 420px; }
+
+    .nav__drawer ul { list-style: none; padding: 16px 0 24px; }
+
+    .nav__drawer ul li {
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+
+    .nav__drawer.open li { opacity: 1; transform: none; }
+    .nav__drawer.open li:nth-child(1) { transition-delay: 0.04s; }
+    .nav__drawer.open li:nth-child(2) { transition-delay: 0.08s; }
+    .nav__drawer.open li:nth-child(3) { transition-delay: 0.12s; }
+    .nav__drawer.open li:nth-child(4) { transition-delay: 0.16s; }
+    .nav__drawer.open li:nth-child(5) { transition-delay: 0.20s; }
+
+    .nav__drawer a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 32px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s, padding-left 0.2s;
+    }
+
+    .nav__drawer a:hover,
+    .nav__drawer a.active {
+      color: var(--text);
+      border-left-color: var(--accent);
+      padding-left: 40px;
+    }
+
+    .drawer__num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: rgba(200,87,27,0.5);
+      min-width: 20px;
+    }
+
+    .drawer__divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 32px;
+    }
+
+    @media (max-width: 900px) {
+      .nav__links a { padding: 8px 12px; }
+      .nav__links a::after { left: 12px; }
+      .nav__links a:hover::after,
+      .nav__links a.active::after { width: calc(100% - 24px); }
+      .nav__links .nav__cta a { margin-left: 8px; padding: 8px 14px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav__links  { display: none; }
+      .nav__burger { display: flex; }
+      .nav__drawer { display: block; }
+    }
+
+    /* ══════════════════════════════════════════
+       PAGE
+    ══════════════════════════════════════════ */
+    main {
+      flex: 1;
+      padding-top: var(--nav-h);
+    }
+
+    .about-header {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 80px 32px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-header__eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .about-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--text);
+    }
+
+    .about-header h1 span {
+      color: var(--accent);
+    }
+
+    /* ══════════════════════════════════════════
+       ABOUT INTRO SECTION
+    ══════════════════════════════════════════ */
+    .about-intro {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 72px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-intro__text p {
+      font-size: 0.975rem;
+      line-height: 1.85;
+      color: #c4bdb4;
+      margin-bottom: 1.5em;
+    }
+
+    .about-intro__text p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .about-intro__sig {
+      display: block;
+      margin-top: 2em;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.094rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .about-intro__image {
+      position: sticky;
+      top: calc(var(--nav-h) + 32px);
+    }
+
+    .about-intro__image img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    .about-intro__image-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .about-intro__image-placeholder svg {
+      width: 32px;
+      height: 32px;
+      opacity: 0.3;
+    }
+
+    .about-intro__image-placeholder span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    @media (max-width: 860px) {
+      .about-intro {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-intro__image {
+        position: static;
+        order: -1;
+      }
+
+      .about-intro__image-placeholder,
+      .about-intro__image img {
+        aspect-ratio: 4 / 3;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       RESUME SECTIONS
+    ══════════════════════════════════════════ */
+    .resume-wrap {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resume-wrap__label {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px 32px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .resume-wrap__label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .resume-wrap__label span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .resume-section {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 64px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resume-section:last-child {
+      border-bottom: none;
+    }
+
+    /* odd sections: text left, image right (default) */
+    .resume-section__image { order: 2; }
+    .resume-section__text  { order: 1; }
+
+    /* even sections: image left, text right */
+    .resume-section:nth-child(even) .resume-section__image { order: 1; }
+    .resume-section:nth-child(even) .resume-section__text  { order: 2; }
+
+    .resume-section__num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      line-height: 1;
+      color: rgba(200,87,27,0.12);
+      margin-bottom: -8px;
+      letter-spacing: 0.04em;
+    }
+
+    .resume-section__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .resume-section__body {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: #c4bdb4;
+    }
+
+    .resume-section__image-placeholder {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .resume-section__image-placeholder svg {
+      width: 28px;
+      height: 28px;
+      opacity: 0.25;
+    }
+
+    .resume-section__image-placeholder span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.35;
+    }
+
+    .resume-section__subheading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-top: 1.5em;
+    }
+
+    .resume-section__image img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    @media (max-width: 860px) {
+      .resume-section {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 48px 32px;
+      }
+
+      .resume-section__image,
+      .resume-section:nth-child(even) .resume-section__image { order: 1; }
+      .resume-section__text,
+      .resume-section:nth-child(even) .resume-section__text  { order: 2; }
+    }
+
+    /* ══════════════════════════════════════════
+       CALLOUT
+    ══════════════════════════════════════════ */
+    .callout {
+      padding: 80px 32px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .callout__inner {
+      max-width: 550px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    /* alternate h2 — wide-tracked, Barlow Condensed, accent color */
+    h2.alt {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .callout__eyebrow { margin-bottom: 12px; }
+
+    .callout h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .callout p {
+      font-size: 0.975rem;
+      color: #c4bdb4;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 32px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .footer__copy {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer__social {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer__social a {
+      display: flex;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .footer__social a:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .footer__social svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════ -->
+  <nav class="nav" id="mainNav" aria-label="Main navigation">
+    <div class="nav__inner">
+
+      <a href="index.html" class="nav__logo" aria-label="California Custom Vans — home">
+        <span class="nav__logo-primary">California</span>
+        <span class="nav__logo-slash">/</span>
+        <span class="nav__logo-sub">Custom Vans</span>
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="vans.html">Van Gallery</a>
+          <ul class="nav__dropdown">
+            <li><a href="tanner.html">Tanner</a></li>
+            <li><a href="greyson.html">Greyson</a></li>
+            <li><a href="yosemite-sprinter.html">Yosemite Sprinter</a></li>
+            <li><a href="the-transit.html">The Transit</a></li>
+            <li><a href="maxs-mercedes.html">Max's Mercedes</a></li>
+            <li><a href="meet-foley.html">Meet Foley</a></li>
+            <li><a href="the-studio.html">The Studio</a></li>
+            <li><a href="the-city.html">The City</a></li>
+            <li><a href="ethel.html">Ethel</a></li>
+          </ul>
+        </li>
+        <li><a href="news.html">Press &amp; Media</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li class="nav__cta"><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <button
+        class="nav__burger"
+        id="burgerBtn"
+        aria-controls="mobileDrawer"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ══ MOBILE DRAWER ═════════════════════════ -->
+  <div class="nav__drawer" id="mobileDrawer" aria-hidden="true">
+    <ul role="list">
+      <li><a href="index.html"><span class="drawer__num">01</span>Home</a></li>
+      <li><a href="vans.html"><span class="drawer__num">02</span>Van Gallery</a></li>
+      <li><a href="news.html"><span class="drawer__num">03</span>Press &amp; Media</a></li>
+      <li><a href="about.html" class="active"><span class="drawer__num">04</span>About</a></li>
+      <li>
+        <div class="drawer__divider" role="separator"></div>
+        <a href="contact.html"><span class="drawer__num">→</span>Contact</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ══ CONTENT ═══════════════════════════════ -->
+  <main>
+    <div class="about-header">
+      <p class="about-header__eyebrow">Our Story</p>
+      <h1>About California<br/><span>Custom Vans</span></h1>
+    </div>
+
+    <section class="about-intro" aria-label="Introduction">
+      <div class="about-intro__text">
+        <p>In a time when it seems like everyone with a circular saw is getting into the business of building vans I thought it might be helpful to share a little bit about the experiences that led me to this point. While pictures can tell quite the tale, a foreword to those images can help provide insight and confidence in the framework behind those refined surfaces.</p>
+        <p>Regardless of whether you're ordering a fully-built Sprinter van or a simple slide out for your pickup truck, your project is my priority. Every project has the potential to be life changing. To open the door to travel. To give you the freedom. To provide an escape from the status quo. To me, there's nothing more important and remains the reason I take on one customer at a time. To focus on you, your priorities, your passion.</p>
+        <p>The build concept is simple: Everything from scratch. No pre-fabricated kitchen cabinets. No mass produced, one size fits all, "vanlife" kit components force fit into your van. No matter the amenity, it will be custom built to fit your van, your layout, your needs. Want an overhead cabinet 3" shorter so you can fit a hanger for your jackets? No problem. Found a fridge you can't live without? I'll design your space around it. A van is a relatively small space to reside in and every square inch needs to be taken advantage of. So, instead of purchasing pre-fab, bolt-on equipment, everything is custom made to fit your van perfectly.</p>
+        <p>Many experiences in the past have led me to the design, structural philosophy and color schemes I put behind my builds. In the interest of brevity, please find a brief resume below as it pertains to the most important areas of van building.</p>
+        <span class="about-intro__sig">— Brad</span>
+      </div>
+
+      <div class="about-intro__image">
+        <div class="about-intro__image-placeholder" aria-label="Photo placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Image coming soon</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RESUME SECTIONS ══════════════════════ -->
+    <div class="resume-wrap">
+      <div class="resume-wrap__label"><span>Experience &amp; Background</span></div>
+
+      <section class="resume-section">
+        <div class="resume-section__image">
+          <div class="resume-section__image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Image coming soon</span>
+          </div>
+        </div>
+        <div class="resume-section__text">
+          <p class="resume-section__num">01</p>
+          <h2 class="resume-section__heading">Carpentry &amp; Cabinetry</h2>
+          <p class="resume-section__body">From skate parks to speaker boxes, I've been building things out of wood from the time I weighed a tad more than a table saw. With a garage full of tools, a DIY attitude and, an older brother to copy and pester for decades, my focus has always been sturdy, functional pieces. "If you can't body slam it, it's not good enough" I tell my customers. That theory comes from building ramps, tree houses and furniture that would see abuse from an entire neighborhood of raving lunatics. Yes, Jenny, if you're reading this, I mean you. I carry that concept through every van as I imagine friends, family and fur balls happily bounding through the space, enjoying adventure on the road without a care in the world.</p>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <div class="resume-section__image">
+          <div class="resume-section__image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Image coming soon</span>
+          </div>
+        </div>
+        <div class="resume-section__text">
+          <p class="resume-section__num">02</p>
+          <h2 class="resume-section__heading">Electrical Systems</h2>
+          <p class="resume-section__body">Before vans I had the pleasure of being the lead tech and system designer for a few of NYC and LA's finest Audio Visual companies. A passion and, quite frankly, a demand for clean, safe, sophisticated wiring practices has been ingrained in my work flow. From multi-floor conference rooms to designer homes in the Hamptons my experience with complex wiring systems is vast. A van is no different. Clean, concise, wiring doesn't just look good. It makes a system efficient, serviceable and easy to understand for the end user. Whether it be you or a rest stop mechanic changing a fuse, I constantly consider who may come into contact with your system. On top of that every 120 Volt connection is check and certified by a licensed electrician.</p>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <div class="resume-section__image">
+          <div class="resume-section__image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Image coming soon</span>
+          </div>
+        </div>
+        <div class="resume-section__text">
+          <p class="resume-section__num">03</p>
+          <h2 class="resume-section__heading">Design &amp; Aesthetics</h2>
+          <p class="resume-section__body">After high school I set off to the University At Buffalo where I obtained a Bachelors in Fine Arts. As a conceptual school, focus was not on artistic genres, per se, such as still life (drawing an orange with a desk lamp on it is pretty boring), but how to think critically about color, space and the importance of conveying your concept to the viewer. I see every van as a perfect opportunity to put that into practice. A small, refined, space that will become someone's entire domain. To fine-tune that idea isn't just fun for me, it's critical to the enjoyment and usage of the end user. To have every customer lay in their van and not just enjoy a comfy bed but, to feel truly at home, safe and, excited to be in their personalized mobile dwelling.</p>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <div class="resume-section__image">
+          <div class="resume-section__image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Image coming soon</span>
+          </div>
+        </div>
+        <div class="resume-section__text">
+          <p class="resume-section__num">04</p>
+          <h2 class="resume-section__heading">Insulation</h2>
+          <p class="resume-section__body">After a summer of cold showers, itchy hands and nearly plummeting to my death inside of a Toshiba factory, I learned a lot about the art of insulation. From R value to air gaps. From safety harnesses to... well, safety harnesses (you should really wear them) I learned not only how, but why proper material, placement and technique is important to temperature regulation in any space.</p>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <div class="resume-section__image">
+          <div class="resume-section__image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Image coming soon</span>
+          </div>
+        </div>
+        <div class="resume-section__text">
+          <p class="resume-section__num">05</p>
+          <h2 class="resume-section__heading">Ethics</h2>
+          <p class="resume-section__body">I have none. I've taken your money and your van to Mexico. Later losers...</p>
+          <p class="resume-section__body">As a small business I am personally responsible for every aspect of your van. From floor to ceiling, literally. And I don't just feel the weight of that, I thrive on it. There is nothing more important to me than giving you the build of your dreams. For you to open the door for the first time and have your jaw hit the floor. (Not the van floor. I just cleaned that you jerk.) And I think about that every day. What can I make just a little better than you were expecting? What feature can I surprise you with that will make your space that much more useful? I didn't start building because I saw dollar signs. I started building because I love it. I keep building because it challenges me and makes me happy. I'm in business because if I kept building and didn't make it a business I would have too many vans for one person. What I mean is that your project isn't just a paycheck and onto the next for me. It's a work of art I put my entire being into so that I can be proud of it when you drive it away.</p>
+          <h3 class="resume-section__subheading">Thank You!</h3>
+          <p class="resume-section__body">While I know there are endless options in choosing a van builder I'd like to thank you for simply stopping by this site. To see the interest, excitement and encouragement coming from you all is truly up lifting. Thank you!</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ══ CALLOUT ══════════════════════════════ -->
+    <div class="callout">
+      <div class="callout__inner">
+        <h2 class="callout__eyebrow alt">Peace of Mind</h2>
+        <p>Your vehicle and equipment are fully insured when on CCV premises. Vehicles are always kept behind a solid, locked gate with 24/7 security camera surveillance.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══ FOOTER ═══════════════════════════════ -->
+  <footer class="site-footer">
+    <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
+    <div class="footer__social" aria-label="Social media links">
+      <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    const burger = document.getElementById('burgerBtn');
+    const drawer = document.getElementById('mobileDrawer');
+    const nav    = document.getElementById('mainNav');
+
+    burger.addEventListener('click', () => {
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      drawer.setAttribute('aria-hidden', String(open));
+      drawer.classList.toggle('open', !open);
+      document.body.style.overflow = open ? '' : 'hidden';
+    });
+
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) {
+        burger.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+        burger.focus();
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    window.matchMedia('(min-width: 641px)').addEventListener('change', e => {
+      if (e.matches) {
+        burger.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
