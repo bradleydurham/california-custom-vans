@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -47,6 +46,7 @@
       background-size: 200px 200px;
     }
 
+    /* ── NAV ── */
     .nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -57,13 +57,11 @@
       box-shadow: 0 1px 0 rgba(200,87,27,0.15), 0 4px 32px rgba(0,0,0,0.5);
       transition: background 0.3s;
     }
-
     .nav.scrolled {
       background: rgba(14,12,10,0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
-
     .nav__inner {
       max-width: 1440px;
       margin: 0 auto;
@@ -74,46 +72,18 @@
       justify-content: space-between;
       gap: 24px;
     }
-
     .nav__logo {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       text-decoration: none;
-      flex-shrink: 0;
-      letter-spacing: 0.02em;
     }
-
-    .nav__logo-primary {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--text);
-      line-height: 1;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
+    .nav__logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      transition: opacity 0.2s;
     }
-
-    .nav__logo-slash {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--accent);
-      line-height: 1;
-      margin: 0 4px;
-    }
-
-    .nav__logo-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      align-self: center;
-      padding-top: 2px;
-      transition: color 0.2s;
-    }
-
-    .nav__logo:hover .nav__logo-primary { color: #fff; }
-    .nav__logo:hover .nav__logo-sub     { color: var(--text); }
+    .nav__logo:hover .nav__logo-img { opacity: 0.85; }
 
     .nav__links {
       display: flex;
@@ -121,7 +91,6 @@
       gap: 0;
       list-style: none;
     }
-
     .nav__links a {
       position: relative;
       display: block;
@@ -136,7 +105,6 @@
       transition: color 0.2s;
       white-space: nowrap;
     }
-
     .nav__links a::after {
       content: '';
       position: absolute;
@@ -145,18 +113,12 @@
       background: var(--accent);
       transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
     }
-
     .nav__links a:hover,
     .nav__links a.active { color: var(--text); }
-
     .nav__links a:hover::after,
     .nav__links a.active::after { width: calc(100% - 36px); }
 
-    /* ── dropdown ── */
-    .nav__dropdown-wrap {
-      position: relative;
-    }
-
+    .nav__dropdown-wrap { position: relative; }
     .nav__dropdown-wrap > a::before {
       content: '';
       display: inline-block;
@@ -171,15 +133,9 @@
       position: relative;
       top: -1px;
     }
-
-    .nav__dropdown-wrap:hover > a::before {
-      transform: rotate(180deg);
-      opacity: 1;
-    }
-
-    /* suppress the sweep-underline ::after on the dropdown trigger */
+    .nav__dropdown-wrap:hover > a::before { transform: rotate(180deg); opacity: 1; }
     .nav__dropdown-wrap > a::after { display: none; }
-
+    .nav__dropdown-wrap > a.active::after { display: block; }
     .nav__dropdown {
       position: absolute;
       top: calc(100% + 8px);
@@ -194,19 +150,11 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(-6px);
-      transition: opacity 0.2s cubic-bezier(0.4,0,0.2,1),
-                  transform 0.2s cubic-bezier(0.4,0,0.2,1),
-                  visibility 0.2s;
+      transition: opacity 0.2s cubic-bezier(0.4,0,0.2,1), transform 0.2s cubic-bezier(0.4,0,0.2,1), visibility 0.2s;
       z-index: 200;
     }
-
     .nav__dropdown-wrap:hover .nav__dropdown,
-    .nav__dropdown-wrap:focus-within .nav__dropdown {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
+    .nav__dropdown-wrap:focus-within .nav__dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav__dropdown li a {
       display: block;
       padding: 9px 20px;
@@ -220,18 +168,9 @@
       white-space: nowrap;
       transition: color 0.15s, padding-left 0.15s, background 0.15s;
     }
-
     .nav__dropdown li a::after { display: none !important; }
-
-    .nav__dropdown li a:hover {
-      color: var(--text);
-      padding-left: 26px;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .nav__dropdown li + li {
-      border-top: 1px solid var(--border);
-    }
+    .nav__dropdown li a:hover { color: var(--text); padding-left: 26px; background: rgba(255,255,255,0.03); }
+    .nav__dropdown li + li { border-top: 1px solid var(--border); }
 
     .nav__links .nav__cta a {
       margin-left: 12px;
@@ -240,14 +179,8 @@
       border: 1px solid rgba(200,87,27,0.35);
       transition: color 0.2s, background 0.2s, border-color 0.2s;
     }
-
     .nav__links .nav__cta a::after { display: none; }
-
-    .nav__links .nav__cta a:hover {
-      color: #fff;
-      background: var(--accent);
-      border-color: var(--accent);
-    }
+    .nav__links .nav__cta a:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
 
     .nav__burger {
       display: none;
@@ -255,15 +188,12 @@
       justify-content: center;
       align-items: flex-end;
       gap: 5px;
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       cursor: pointer;
-      background: none;
-      border: none;
+      background: none; border: none;
       padding: 4px;
       flex-shrink: 0;
     }
-
     .nav__burger span {
       display: block;
       height: 1.5px;
@@ -271,11 +201,9 @@
       border-radius: 2px;
       transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s, width 0.3s;
     }
-
     .nav__burger span:nth-child(1) { width: 24px; }
     .nav__burger span:nth-child(2) { width: 18px; }
     .nav__burger span:nth-child(3) { width: 24px; }
-
     .nav__burger[aria-expanded="true"] span:nth-child(1) { width: 24px; transform: translateY(6.5px) rotate(45deg); }
     .nav__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav__burger[aria-expanded="true"] span:nth-child(3) { width: 24px; transform: translateY(-6.5px) rotate(-45deg); }
@@ -293,23 +221,15 @@
       transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
       z-index: 999;
     }
-
     .nav__drawer.open { max-height: 420px; }
     .nav__drawer ul { list-style: none; padding: 16px 0 24px; }
-
-    .nav__drawer ul li {
-      opacity: 0;
-      transform: translateX(-12px);
-      transition: opacity 0.25s, transform 0.25s;
-    }
-
+    .nav__drawer ul li { opacity: 0; transform: translateX(-12px); transition: opacity 0.25s, transform 0.25s; }
     .nav__drawer.open li { opacity: 1; transform: none; }
     .nav__drawer.open li:nth-child(1) { transition-delay: 0.04s; }
     .nav__drawer.open li:nth-child(2) { transition-delay: 0.08s; }
     .nav__drawer.open li:nth-child(3) { transition-delay: 0.12s; }
     .nav__drawer.open li:nth-child(4) { transition-delay: 0.16s; }
     .nav__drawer.open li:nth-child(5) { transition-delay: 0.20s; }
-
     .nav__drawer a {
       display: flex;
       align-items: center;
@@ -325,14 +245,8 @@
       border-left: 2px solid transparent;
       transition: color 0.2s, border-color 0.2s, padding-left 0.2s;
     }
-
     .nav__drawer a:hover,
-    .nav__drawer a.active {
-      color: var(--text);
-      border-left-color: var(--accent);
-      padding-left: 40px;
-    }
-
+    .nav__drawer a.active { color: var(--text); border-left-color: var(--accent); padding-left: 40px; }
     .drawer__num {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.6rem;
@@ -341,12 +255,7 @@
       color: rgba(200,87,27,0.5);
       min-width: 20px;
     }
-
-    .drawer__divider {
-      height: 1px;
-      background: var(--border);
-      margin: 10px 32px;
-    }
+    .drawer__divider { height: 1px; background: var(--border); margin: 10px 32px; }
 
     @media (max-width: 900px) {
       .nav__links a { padding: 8px 12px; }
@@ -355,25 +264,21 @@
       .nav__links a.active::after { width: calc(100% - 24px); }
       .nav__links .nav__cta a { margin-left: 8px; padding: 8px 14px; }
     }
-
     @media (max-width: 640px) {
       .nav__links  { display: none; }
       .nav__burger { display: flex; }
       .nav__drawer { display: block; }
     }
 
-    main {
-      flex: 1;
-      padding-top: var(--nav-h);
-    }
+    main { flex: 1; padding-top: var(--nav-h); }
 
+    /* ── PAGE HEADER ── */
     .page-header {
       max-width: 1440px;
       margin: 0 auto;
       padding: 80px 32px 48px;
       border-bottom: 1px solid var(--border);
     }
-
     .page-header__eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.65rem;
@@ -383,7 +288,6 @@
       color: var(--accent);
       margin-bottom: 16px;
     }
-
     .page-header h1 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2.8rem, 7vw, 6rem);
@@ -392,36 +296,227 @@
       color: var(--text);
     }
 
+    /* ── VAN DETAIL ── */
     .van-detail {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 64px 32px 80px;
+      padding: 64px 32px 0;
     }
-
+    .van-detail__hero-wrap {
+      position: relative;
+      margin-bottom: 56px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
     .van-detail__hero {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
+      height: auto;
       display: block;
-      margin-bottom: 48px;
     }
-
     .van-detail__body {
       max-width: 720px;
+      margin: 0 auto;
+      padding-bottom: 64px;
     }
-
+    .van-detail__body h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
     .van-detail__body p {
       font-family: 'Barlow', sans-serif;
       font-weight: 300;
       font-size: 1.05rem;
-      line-height: 1.4;
+      line-height: 1.75;
+      color: rgba(232,224,214,0.8);
+    }
+    .van-detail__body p + p { margin-top: 1.4em; }
+
+    /* ── HIGHLIGHTS ── */
+    .highlights {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+    .highlights__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .highlights__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 860px) {
+      .highlights__grid { grid-template-columns: 1fr; }
+    }
+    .highlight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .highlight-card__img-wrap { overflow: hidden; }
+    .highlight-card__img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .highlight-card:hover .highlight-card__img { transform: scale(1.04); }
+    .highlight-card__content {
+      padding: 24px 24px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .highlight-card__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
       color: var(--text);
     }
-
-    .van-detail__back {
-      margin-top: 48px;
+    .highlight-card__body {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(232,224,214,0.7);
+    }
+    .highlight-card__body em {
+      font-style: italic;
+      color: rgba(232,224,214,0.85);
     }
 
+    /* ── GALLERY ── */
+    .features {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 96px;
+    }
+    .features__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .gallery-grid__item {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--surface);
+      position: relative;
+    }
+    .gallery-grid__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .gallery-grid__item:hover img { transform: scale(1.06); }
+    .gallery-grid__item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(200,87,27,0);
+      transition: background 0.3s;
+      pointer-events: none;
+    }
+    .gallery-grid__item:hover::after { background: rgba(200,87,27,0.08); }
+
+    @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 540px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; } .features { padding: 0 16px 64px; } }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,0.93);
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox.active { display: flex; }
+    .lightbox__img-wrap {
+      position: relative;
+      max-width: 90vw; max-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox__img {
+      max-width: 90vw; max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+      display: block;
+      user-select: none;
+    }
+    .lightbox__close {
+      position: fixed; top: 20px; right: 24px;
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text); font-size: 1.2rem;
+      transition: background 0.2s;
+      z-index: 9001;
+    }
+    .lightbox__close:hover { background: rgba(255,255,255,0.16); }
+    .lightbox__prev, .lightbox__next {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text); font-size: 1.2rem;
+      transition: background 0.2s;
+      z-index: 9001;
+      user-select: none;
+    }
+    .lightbox__prev { left: 20px; }
+    .lightbox__next { right: 20px; }
+    .lightbox__prev:hover, .lightbox__next:hover { background: rgba(255,255,255,0.18); }
+    .lightbox__counter {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      z-index: 9001;
+    }
+
+    /* ── BACK LINK ── */
+    .van-detail__back {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
     .van-detail__back a {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.7rem;
@@ -432,52 +527,32 @@
       text-decoration: none;
       transition: color 0.2s;
     }
+    .van-detail__back a:hover { color: var(--accent-lt); }
 
-    .van-detail__back a:hover {
-      color: var(--accent-lt);
-    }
-
+    /* ── FOOTER ── */
     .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer__inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 20px 32px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
     }
-
     .footer__copy {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--muted);
     }
-
-    .footer__social {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .footer__social a {
-      display: flex;
-      color: var(--muted);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .footer__social a:hover {
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .footer__social svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
+    .footer__social { display: flex; align-items: center; gap: 20px; }
+    .footer__social a { display: flex; color: var(--muted); transition: color 0.2s, transform 0.2s; }
+    .footer__social a:hover { color: var(--accent); transform: translateY(-2px); }
+    .footer__social svg { width: 18px; height: 18px; fill: currentColor; }
   </style>
 </head>
 <body>
@@ -485,9 +560,7 @@
   <nav class="nav" id="mainNav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo" aria-label="California Custom Vans — home">
-        <span class="nav__logo-primary">California</span>
-        <span class="nav__logo-slash">/</span>
-        <span class="nav__logo-sub">Custom Vans</span>
+        <img src="Assets/ccv-logo-light.png" alt="California Custom Vans" class="nav__logo-img" />
       </a>
       <ul class="nav__links" role="list">
         <li><a href="index.html">Home</a></li>
@@ -505,7 +578,15 @@
             <li><a href="ethel.html">Ethel</a></li>
           </ul>
         </li>
-        <li><a href="news.html">Press &amp; Media</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="news.html">Press &amp; Media</a>
+          <ul class="nav__dropdown">
+            <li><a href="https://sdvoyager.com/interview/inspiring-conversations-with-bradley-piersons-of-california-custom-vans/" target="_blank" rel="noopener noreferrer">SD Voyager Feature</a></li>
+            <li><a href="https://shoutoutsocal.com/meet-brad-piersons-custom-van-builder/" target="_blank" rel="noopener noreferrer">Shoutout SoCal Interview</a></li>
+            <li><a href="https://www.youtube.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV YouTube</a></li>
+            <li><a href="https://www.instagram.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV Instagram</a></li>
+          </ul>
+        </li>
         <li><a href="about.html">About</a></li>
         <li class="nav__cta"><a href="contact.html">Contact</a></li>
       </ul>
@@ -533,34 +614,175 @@
       <p class="page-header__eyebrow">Van Gallery</p>
       <h1>Ethel</h1>
     </div>
+
     <section class="van-detail">
-      <img class="van-detail__hero" src="Assets/ethel.jpg" alt="Ethel" />
-      <div class="van-detail__body">
-        <p>Watch our 1965 GMC show piece slowly take shape.</p>
+      <div class="van-detail__hero-wrap">
+        <img class="van-detail__hero" src="Assets/Ethel/IMG_7930.jpeg" alt="Ethel" />
       </div>
-      <div class="van-detail__back">
-        <a href="vans.html">← Back to Gallery</a>
+      <div class="van-detail__body">
+        <h2>1965 GMC Handi-Van</h2>
+        <p>Watch as we slowly bring our show piece, Ethel, to life.</p>
       </div>
     </section>
   </main>
 
+  <!-- Highlights -->
+  <section class="highlights">
+    <h2 class="highlights__heading">Build Highlights</h2>
+    <div class="highlights__grid">
+
+      <div class="highlight-card">
+        <div class="highlight-card__img-wrap">
+          <img class="highlight-card__img" src="Assets/Ethel/highlights/IMG_20200209_154858.jpg" alt="Audio" />
+        </div>
+        <div class="highlight-card__content">
+          <h3 class="highlight-card__title">Audio</h3>
+          <p class="highlight-card__body"><em>Custom Panels. Infinity Sound. Retro Styling.</em><br><br>We scoured the internet to find premium quality Infinity speakers to match the retro styling of Ethel.</p>
+        </div>
+      </div>
+
+      <div class="highlight-card">
+        <div class="highlight-card__img-wrap">
+          <img class="highlight-card__img" src="Assets/Ethel/highlights/IMG_20200104_170820.jpg" alt="Hidden Technology" />
+        </div>
+        <div class="highlight-card__content">
+          <h3 class="highlight-card__title">Hidden Technology</h3>
+          <p class="highlight-card__body"><em>Custom wood dash.</em><br><br>With a desire to hide any modern functionality without actually giving it up, we've designed this wood dash to house an in-line volume control as well as a secret way to hold a smartphone and display maps, music and more.</p>
+        </div>
+      </div>
+
+      <div class="highlight-card">
+        <div class="highlight-card__img-wrap">
+          <img class="highlight-card__img" src="Assets/Ethel/highlights/IMG_20200330_165156.jpg" alt="The Basics" />
+        </div>
+        <div class="highlight-card__content">
+          <h3 class="highlight-card__title">The Basics</h3>
+          <p class="highlight-card__body"><em>From the ground up.</em><br><br>We gutted this lady down to the bolts. And then, we scrubbed. With a fresh canvas, the process begins.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="features">
+    <h2 class="features__heading">Ready to be Wowed?</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/01-IMG_3827-copy.jpg" alt="Ethel photo 1" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/02-IMG_7926-scaled.jpeg" alt="Ethel photo 2" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/03-IMG_7930-scaled.jpeg" alt="Ethel photo 3" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/04-IMG_7943-scaled.jpeg" alt="Ethel photo 4" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/05-IMG_3822.jpg" alt="Ethel photo 5" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/06-IMG_3780.jpg" alt="Ethel photo 6" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/07-IMG_3792.jpg" alt="Ethel photo 7" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/08-IMG_3789.jpg" alt="Ethel photo 8" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/09-IMG_3001-scaled.jpeg" alt="Ethel photo 9" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/10-IMG_3811.jpg" alt="Ethel photo 10" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/11-IMG_3807.jpg" alt="Ethel photo 11" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/12-IMG_20191202_083846-scaled.jpg" alt="Ethel photo 12" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/13-IMG_20191201_130756.jpg" alt="Ethel photo 13" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/14-IMG_20191201_202545-scaled.jpg" alt="Ethel photo 14" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/15-IMG_20191214_124712-scaled.jpg" alt="Ethel photo 15" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/16-IMG_20200330_182801.jpg" alt="Ethel photo 16" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/17-IMG_20200330_165156-scaled.jpg" alt="Ethel photo 17" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/18-IMG_20200104_170840-scaled.jpg" alt="Ethel photo 18" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/19-IMG_20200104_170820-scaled.jpg" alt="Ethel photo 19" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/20-IMG_20200209_153008-scaled.jpg" alt="Ethel photo 20" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/21-IMG_20200209_154858-scaled.jpg" alt="Ethel photo 21" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/22-IMG_20200209_154824-scaled.jpg" alt="Ethel photo 22" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/23-IMG_20200208_095259-scaled.jpg" alt="Ethel photo 23" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/24-IMG_20200105_083021-scaled.jpg" alt="Ethel photo 24" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/25-IMG_20191231_184554-scaled.jpg" alt="Ethel photo 25" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/26-IMG_20191231_190131-scaled.jpg" alt="Ethel photo 26" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/27-IMG_20191214_125448-scaled.jpg" alt="Ethel photo 27" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/28-IMG_20191229_122652-scaled.jpg" alt="Ethel photo 28" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/29-IMG_20191229_122643-scaled.jpg" alt="Ethel photo 29" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/30-IMG_20191228_195728-scaled.jpg" alt="Ethel photo 30" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/31-IMG_20200104_170409-scaled.jpg" alt="Ethel photo 31" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/32-IMG_20191214_103801-scaled.jpg" alt="Ethel photo 32" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/33-IMG_7934.jpeg" alt="Ethel photo 33" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/Ethel/gallery/34-IMG_5950-scaled.jpeg" alt="Ethel photo 34" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lightbox__prev" id="lbPrev" aria-label="Previous">&#8592;</button>
+    <div class="lightbox__img-wrap">
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+    </div>
+    <button class="lightbox__next" id="lbNext" aria-label="Next">&#8594;</button>
+    <div class="lightbox__counter" id="lbCounter"></div>
+  </div>
+
+  <!-- Back link -->
+  <div class="van-detail__back">
+    <a href="vans.html">← Back to Gallery</a>
+  </div>
+
   <footer class="site-footer">
-    <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
-    <div class="footer__social" aria-label="Social media links">
-      <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-      </a>
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
+      <div class="footer__social" aria-label="Social media links">
+        <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+  
     </div>
   </footer>
 
   <script>
     document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    (() => {
+      const images = Array.from(document.querySelectorAll('#galleryGrid .gallery-grid__item img')).map(img => img.src);
+      const lightbox = document.getElementById('lightbox');
+      const lbImg    = document.getElementById('lbImg');
+      const lbCounter= document.getElementById('lbCounter');
+      let current = 0;
+
+      function open(index) {
+        if (!images.length) return;
+        current = index;
+        lbImg.src = images[current];
+        lbImg.alt = `Photo ${current + 1}`;
+        lbCounter.textContent = `${current + 1} / ${images.length}`;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+      function prev() { open((current - 1 + images.length) % images.length); }
+      function next() { open((current + 1) % images.length); }
+
+      document.querySelectorAll('#galleryGrid .gallery-grid__item').forEach((item, i) => {
+        item.addEventListener('click', () => open(i));
+      });
+
+      document.getElementById('lbClose').addEventListener('click', close);
+      document.getElementById('lbPrev').addEventListener('click', prev);
+      document.getElementById('lbNext').addEventListener('click', next);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'ArrowRight') next();
+      });
+    })();
+
     const burger = document.getElementById('burgerBtn');
     const drawer = document.getElementById('mobileDrawer');
     const nav    = document.getElementById('mainNav');
+
     burger.addEventListener('click', () => {
       const open = burger.getAttribute('aria-expanded') === 'true';
       burger.setAttribute('aria-expanded', String(!open));

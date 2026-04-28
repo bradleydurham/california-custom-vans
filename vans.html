@@ -81,43 +81,18 @@
 
     .nav__logo {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       text-decoration: none;
-      flex-shrink: 0;
-      letter-spacing: 0.02em;
     }
 
-    .nav__logo-primary {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--text);
-      line-height: 1;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
+    .nav__logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      transition: opacity 0.2s;
     }
 
-    .nav__logo-slash {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--accent);
-      line-height: 1;
-      margin: 0 4px;
-    }
-
-    .nav__logo-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      align-self: center;
-      padding-top: 2px;
-      transition: color 0.2s;
-    }
-
-    .nav__logo:hover .nav__logo-primary { color: #fff; }
-    .nav__logo:hover .nav__logo-sub     { color: var(--text); }
+    .nav__logo:hover .nav__logo-img { opacity: 0.85; }
 
     .nav__links {
       display: flex;
@@ -183,6 +158,7 @@
 
     /* suppress the sweep-underline ::after on the dropdown trigger */
     .nav__dropdown-wrap > a::after { display: none; }
+    .nav__dropdown-wrap > a.active::after { display: block; }
 
     .nav__dropdown {
       position: absolute;
@@ -514,13 +490,17 @@
        FOOTER
     ══════════════════════════════════════════ */
     .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer__inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 20px 32px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
     }
 
     .footer__copy {
@@ -563,9 +543,7 @@
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="California Custom Vans — home">
-        <span class="nav__logo-primary">California</span>
-        <span class="nav__logo-slash">/</span>
-        <span class="nav__logo-sub">Custom Vans</span>
+        <img src="Assets/ccv-logo-light.png" alt="California Custom Vans" class="nav__logo-img" />
       </a>
 
       <ul class="nav__links" role="list">
@@ -584,7 +562,15 @@
             <li><a href="ethel.html">Ethel</a></li>
           </ul>
         </li>
-        <li><a href="news.html">Press &amp; Media</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="news.html">Press &amp; Media</a>
+          <ul class="nav__dropdown">
+            <li><a href="https://sdvoyager.com/interview/inspiring-conversations-with-bradley-piersons-of-california-custom-vans/" target="_blank" rel="noopener noreferrer">SD Voyager Feature</a></li>
+            <li><a href="https://shoutoutsocal.com/meet-brad-piersons-custom-van-builder/" target="_blank" rel="noopener noreferrer">Shoutout SoCal Interview</a></li>
+            <li><a href="https://www.youtube.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV YouTube</a></li>
+            <li><a href="https://www.instagram.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV Instagram</a></li>
+          </ul>
+        </li>
         <li><a href="about.html">About</a></li>
         <li class="nav__cta"><a href="contact.html">Contact</a></li>
       </ul>
@@ -731,18 +717,21 @@
 
   <!-- ══ FOOTER ═══════════════════════════════ -->
   <footer class="site-footer">
-    <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
-    <div class="footer__social" aria-label="Social media links">
-      <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-        </svg>
-      </a>
-      <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-      </a>
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
+      <div class="footer__social" aria-label="Social media links">
+        <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+          </svg>
+        </a>
+      </div>
+  
     </div>
   </footer>
 

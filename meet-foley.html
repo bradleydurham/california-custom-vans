@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -57,13 +56,11 @@
       box-shadow: 0 1px 0 rgba(200,87,27,0.15), 0 4px 32px rgba(0,0,0,0.5);
       transition: background 0.3s;
     }
-
     .nav.scrolled {
       background: rgba(14,12,10,0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
-
     .nav__inner {
       max-width: 1440px;
       margin: 0 auto;
@@ -74,46 +71,18 @@
       justify-content: space-between;
       gap: 24px;
     }
-
     .nav__logo {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       text-decoration: none;
-      flex-shrink: 0;
-      letter-spacing: 0.02em;
     }
-
-    .nav__logo-primary {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--text);
-      line-height: 1;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
+    .nav__logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      transition: opacity 0.2s;
     }
-
-    .nav__logo-slash {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--accent);
-      line-height: 1;
-      margin: 0 4px;
-    }
-
-    .nav__logo-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      align-self: center;
-      padding-top: 2px;
-      transition: color 0.2s;
-    }
-
-    .nav__logo:hover .nav__logo-primary { color: #fff; }
-    .nav__logo:hover .nav__logo-sub     { color: var(--text); }
+    .nav__logo:hover .nav__logo-img { opacity: 0.85; }
 
     .nav__links {
       display: flex;
@@ -121,7 +90,6 @@
       gap: 0;
       list-style: none;
     }
-
     .nav__links a {
       position: relative;
       display: block;
@@ -136,7 +104,6 @@
       transition: color 0.2s;
       white-space: nowrap;
     }
-
     .nav__links a::after {
       content: '';
       position: absolute;
@@ -145,18 +112,12 @@
       background: var(--accent);
       transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
     }
-
     .nav__links a:hover,
     .nav__links a.active { color: var(--text); }
-
     .nav__links a:hover::after,
     .nav__links a.active::after { width: calc(100% - 36px); }
 
-    /* ── dropdown ── */
-    .nav__dropdown-wrap {
-      position: relative;
-    }
-
+    .nav__dropdown-wrap { position: relative; }
     .nav__dropdown-wrap > a::before {
       content: '';
       display: inline-block;
@@ -171,15 +132,9 @@
       position: relative;
       top: -1px;
     }
-
-    .nav__dropdown-wrap:hover > a::before {
-      transform: rotate(180deg);
-      opacity: 1;
-    }
-
-    /* suppress the sweep-underline ::after on the dropdown trigger */
+    .nav__dropdown-wrap:hover > a::before { transform: rotate(180deg); opacity: 1; }
     .nav__dropdown-wrap > a::after { display: none; }
-
+    .nav__dropdown-wrap > a.active::after { display: block; }
     .nav__dropdown {
       position: absolute;
       top: calc(100% + 8px);
@@ -194,19 +149,11 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(-6px);
-      transition: opacity 0.2s cubic-bezier(0.4,0,0.2,1),
-                  transform 0.2s cubic-bezier(0.4,0,0.2,1),
-                  visibility 0.2s;
+      transition: opacity 0.2s cubic-bezier(0.4,0,0.2,1), transform 0.2s cubic-bezier(0.4,0,0.2,1), visibility 0.2s;
       z-index: 200;
     }
-
     .nav__dropdown-wrap:hover .nav__dropdown,
-    .nav__dropdown-wrap:focus-within .nav__dropdown {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
+    .nav__dropdown-wrap:focus-within .nav__dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav__dropdown li a {
       display: block;
       padding: 9px 20px;
@@ -220,18 +167,9 @@
       white-space: nowrap;
       transition: color 0.15s, padding-left 0.15s, background 0.15s;
     }
-
     .nav__dropdown li a::after { display: none !important; }
-
-    .nav__dropdown li a:hover {
-      color: var(--text);
-      padding-left: 26px;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .nav__dropdown li + li {
-      border-top: 1px solid var(--border);
-    }
+    .nav__dropdown li a:hover { color: var(--text); padding-left: 26px; background: rgba(255,255,255,0.03); }
+    .nav__dropdown li + li { border-top: 1px solid var(--border); }
 
     .nav__links .nav__cta a {
       margin-left: 12px;
@@ -240,14 +178,8 @@
       border: 1px solid rgba(200,87,27,0.35);
       transition: color 0.2s, background 0.2s, border-color 0.2s;
     }
-
     .nav__links .nav__cta a::after { display: none; }
-
-    .nav__links .nav__cta a:hover {
-      color: #fff;
-      background: var(--accent);
-      border-color: var(--accent);
-    }
+    .nav__links .nav__cta a:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
 
     .nav__burger {
       display: none;
@@ -255,15 +187,12 @@
       justify-content: center;
       align-items: flex-end;
       gap: 5px;
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       cursor: pointer;
-      background: none;
-      border: none;
+      background: none; border: none;
       padding: 4px;
       flex-shrink: 0;
     }
-
     .nav__burger span {
       display: block;
       height: 1.5px;
@@ -271,11 +200,9 @@
       border-radius: 2px;
       transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s, width 0.3s;
     }
-
     .nav__burger span:nth-child(1) { width: 24px; }
     .nav__burger span:nth-child(2) { width: 18px; }
     .nav__burger span:nth-child(3) { width: 24px; }
-
     .nav__burger[aria-expanded="true"] span:nth-child(1) { width: 24px; transform: translateY(6.5px) rotate(45deg); }
     .nav__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav__burger[aria-expanded="true"] span:nth-child(3) { width: 24px; transform: translateY(-6.5px) rotate(-45deg); }
@@ -293,23 +220,15 @@
       transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
       z-index: 999;
     }
-
     .nav__drawer.open { max-height: 420px; }
     .nav__drawer ul { list-style: none; padding: 16px 0 24px; }
-
-    .nav__drawer ul li {
-      opacity: 0;
-      transform: translateX(-12px);
-      transition: opacity 0.25s, transform 0.25s;
-    }
-
+    .nav__drawer ul li { opacity: 0; transform: translateX(-12px); transition: opacity 0.25s, transform 0.25s; }
     .nav__drawer.open li { opacity: 1; transform: none; }
     .nav__drawer.open li:nth-child(1) { transition-delay: 0.04s; }
     .nav__drawer.open li:nth-child(2) { transition-delay: 0.08s; }
     .nav__drawer.open li:nth-child(3) { transition-delay: 0.12s; }
     .nav__drawer.open li:nth-child(4) { transition-delay: 0.16s; }
     .nav__drawer.open li:nth-child(5) { transition-delay: 0.20s; }
-
     .nav__drawer a {
       display: flex;
       align-items: center;
@@ -325,14 +244,8 @@
       border-left: 2px solid transparent;
       transition: color 0.2s, border-color 0.2s, padding-left 0.2s;
     }
-
     .nav__drawer a:hover,
-    .nav__drawer a.active {
-      color: var(--text);
-      border-left-color: var(--accent);
-      padding-left: 40px;
-    }
-
+    .nav__drawer a.active { color: var(--text); border-left-color: var(--accent); padding-left: 40px; }
     .drawer__num {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.6rem;
@@ -341,12 +254,7 @@
       color: rgba(200,87,27,0.5);
       min-width: 20px;
     }
-
-    .drawer__divider {
-      height: 1px;
-      background: var(--border);
-      margin: 10px 32px;
-    }
+    .drawer__divider { height: 1px; background: var(--border); margin: 10px 32px; }
 
     @media (max-width: 900px) {
       .nav__links a { padding: 8px 12px; }
@@ -355,17 +263,13 @@
       .nav__links a.active::after { width: calc(100% - 24px); }
       .nav__links .nav__cta a { margin-left: 8px; padding: 8px 14px; }
     }
-
     @media (max-width: 640px) {
       .nav__links  { display: none; }
       .nav__burger { display: flex; }
       .nav__drawer { display: block; }
     }
 
-    main {
-      flex: 1;
-      padding-top: var(--nav-h);
-    }
+    main { flex: 1; padding-top: var(--nav-h); }
 
     .page-header {
       max-width: 1440px;
@@ -373,7 +277,6 @@
       padding: 80px 32px 48px;
       border-bottom: 1px solid var(--border);
     }
-
     .page-header__eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.65rem;
@@ -383,7 +286,6 @@
       color: var(--accent);
       margin-bottom: 16px;
     }
-
     .page-header h1 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2.8rem, 7vw, 6rem);
@@ -397,31 +299,40 @@
       margin: 0 auto;
       padding: 64px 32px 80px;
     }
-
+    .van-detail__hero-wrap {
+      position: relative;
+      margin-bottom: 48px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
     .van-detail__hero {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
+      height: auto;
       display: block;
-      margin-bottom: 48px;
     }
-
     .van-detail__body {
       max-width: 720px;
+      margin: 0 auto;
+      text-align: left;
     }
-
     .van-detail__body p {
       font-family: 'Barlow', sans-serif;
       font-weight: 300;
       font-size: 1.05rem;
-      line-height: 1.4;
-      color: var(--text);
+      line-height: 1.75;
+      color: rgba(232,224,214,0.8);
     }
+    .van-detail__body p + p { margin-top: 1.4em; }
+    .van-detail__body strong { font-weight: 500; color: var(--text); }
+    .van-detail__body a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    .van-detail__body a:hover { color: var(--accent-lt); }
 
     .van-detail__back {
-      margin-top: 48px;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
     }
-
     .van-detail__back a {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.7rem;
@@ -432,52 +343,302 @@
       text-decoration: none;
       transition: color 0.2s;
     }
+    .van-detail__back a:hover { color: var(--accent-lt); }
 
-    .van-detail__back a:hover {
-      color: var(--accent-lt);
+    .highlights {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 96px;
+    }
+
+    .highlights__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .highlights__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .highlight-card__img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .highlight-card__img-placeholder {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .highlight-card__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .highlight-card__body {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(232,224,214,0.75);
+    }
+
+    @media (max-width: 860px) {
+      .highlights__grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .features-text {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
+    .features-text__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .features-text__body {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(232,224,214,0.8);
+    }
+
+    .features-text__subheading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin: 28px 0 10px;
+    }
+
+    .features-text__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .features-text__list li {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      color: rgba(232,224,214,0.75);
+      padding: 10px 0 10px 16px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .features-text__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .features-text__list { grid-template-columns: 1fr; }
+    }
+
+    .features {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 96px;
+    }
+    .features__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .gallery-grid__item {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--surface);
+      position: relative;
+    }
+    .gallery-grid__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .gallery-grid__item:hover img { transform: scale(1.06); }
+    .gallery-grid__item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(200,87,27,0);
+      transition: background 0.3s;
+      pointer-events: none;
+    }
+    .gallery-grid__item:hover::after { background: rgba(200,87,27,0.08); }
+
+    @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 540px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; } .features { padding: 0 16px 64px; } }
+
+    .gallery-grid__item--placeholder {
+      background: var(--surface);
+      border: 1px dashed rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: default;
+    }
+    .gallery-grid__item--placeholder::before {
+      content: '';
+      display: block;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.2)' stroke-width='1.5'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E") center/18px no-repeat;
+    }
+    .gallery-grid__item--placeholder span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+    }
+    .gallery-grid__item--placeholder:hover img { transform: none; }
+    .gallery-grid__item--placeholder:hover::after { background: none; }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,0.93);
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox.active { display: flex; }
+    .lightbox__img-wrap {
+      position: relative;
+      max-width: 90vw; max-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox__img {
+      max-width: 90vw; max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+      display: block;
+      user-select: none;
+    }
+    .lightbox__close {
+      position: fixed; top: 20px; right: 24px;
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text); font-size: 1.2rem;
+      transition: background 0.2s;
+      z-index: 9001;
+    }
+    .lightbox__close:hover { background: rgba(255,255,255,0.16); }
+    .lightbox__prev, .lightbox__next {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text); font-size: 1.2rem;
+      transition: background 0.2s;
+      z-index: 9001;
+      user-select: none;
+    }
+    .lightbox__prev { left: 20px; }
+    .lightbox__next { right: 20px; }
+    .lightbox__prev:hover, .lightbox__next:hover { background: rgba(255,255,255,0.18); }
+    .lightbox__counter {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      z-index: 9001;
     }
 
     .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer__inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 20px 32px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
     }
-
     .footer__copy {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 0.7rem; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--muted);
     }
-
-    .footer__social {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .footer__social a {
-      display: flex;
-      color: var(--muted);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .footer__social a:hover {
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .footer__social svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
+    .footer__social { display: flex; align-items: center; gap: 20px; }
+    .footer__social a { display: flex; color: var(--muted); transition: color 0.2s, transform 0.2s; }
+    .footer__social a:hover { color: var(--accent); transform: translateY(-2px); }
+    .footer__social svg { width: 18px; height: 18px; fill: currentColor; }
   </style>
 </head>
 <body>
@@ -485,9 +646,7 @@
   <nav class="nav" id="mainNav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo" aria-label="California Custom Vans — home">
-        <span class="nav__logo-primary">California</span>
-        <span class="nav__logo-slash">/</span>
-        <span class="nav__logo-sub">Custom Vans</span>
+        <img src="Assets/ccv-logo-light.png" alt="California Custom Vans" class="nav__logo-img" />
       </a>
       <ul class="nav__links" role="list">
         <li><a href="index.html">Home</a></li>
@@ -505,7 +664,15 @@
             <li><a href="ethel.html">Ethel</a></li>
           </ul>
         </li>
-        <li><a href="news.html">Press &amp; Media</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="news.html">Press &amp; Media</a>
+          <ul class="nav__dropdown">
+            <li><a href="https://sdvoyager.com/interview/inspiring-conversations-with-bradley-piersons-of-california-custom-vans/" target="_blank" rel="noopener noreferrer">SD Voyager Feature</a></li>
+            <li><a href="https://shoutoutsocal.com/meet-brad-piersons-custom-van-builder/" target="_blank" rel="noopener noreferrer">Shoutout SoCal Interview</a></li>
+            <li><a href="https://www.youtube.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV YouTube</a></li>
+            <li><a href="https://www.instagram.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV Instagram</a></li>
+          </ul>
+        </li>
         <li><a href="about.html">About</a></li>
         <li class="nav__cta"><a href="contact.html">Contact</a></li>
       </ul>
@@ -533,34 +700,173 @@
       <p class="page-header__eyebrow">Van Gallery</p>
       <h1>Meet Foley</h1>
     </div>
+
     <section class="van-detail">
-      <img class="van-detail__hero" src="Assets/foley.jpg" alt="Meet Foley" />
-      <div class="van-detail__body">
-        <p>A RAM 2500 with our signature hidden shower, art Deco transitional coverings, a one of a kind fridge box / bench and refined, custom detail throughout.</p>
+      <div class="van-detail__hero-wrap">
+        <img class="van-detail__hero" src="Assets/foley/IMG_20200324_200424.jpg" alt="Meet Foley" />
       </div>
-      <div class="van-detail__back">
-        <a href="vans.html">← Back to Gallery</a>
+      <div class="van-detail__body">
+        <p>Just like Meals On Wheel but, with art! It may not feed your belly but it will absolutely gorge your eyes and force feed your soul with anglehair lines and demi-glace finishings. A testament to a termites version of a Micheline Star meal... on wheels.</p>
+        <p>Ok, I'm done... or not to be done... Ok, ok. With free reign over the detail in this design we couldn't have been more hungry to dive in and spend our time mulling over every painstaking detail. Custom wood coverings for every surface. Hand routed vents in all mechanical boxes. Two-tone stain schemes leaving revealed edges and vents a vidid natural Maple while the faces rendered in whitewash to match. Art Deco inspired transitional coverings, Walnut butcher block throughout and a hand shaped coat rack to boot. Foley, as our customer named him, is certainly ready for a night on the t... trails.</p>
+        <p>Featuring our one of a kind hidden shower, a custom fridge box that doubles as a bench and one of the most robust electrical systems we've done to date, Foley is the complete package for any van dweller.</p>
+        <p>Video walkthrough coming soon. In the meantime, please enjoy the gallery below.</p>
       </div>
     </section>
   </main>
 
+  <!-- Highlights section -->
+  <section class="highlights">
+    <h2 class="highlights__heading">Art on Wheels</h2>
+    <div class="highlights__grid">
+      <div class="highlight-card">
+        <img src="Assets/foley/highlights/01-IMG_20200324_201629.jpg" alt="Shower" class="highlight-card__img" loading="lazy" />
+        <h3 class="highlight-card__title">Shower</h3>
+        <p class="highlight-card__body"><em>Flip. Swing. Ahhhh...</em><br><br>After a long hike, a morning surf or, a trip to a coronavirus infected grocery store, there's nothing like a hot shower. That's right, hot! Our one of a kind hidden shower also features an on-demand water heater.</p>
+      </div>
+      <div class="highlight-card">
+        <img src="Assets/foley/highlights/IMG_20200324_202135.jpg" alt="Table for Two" class="highlight-card__img" loading="lazy" />
+        <h3 class="highlight-card__title">Table for Two</h3>
+        <p class="highlight-card__body"><em>Best seats in the house!</em><br><br>With two swivel bases installed this Promaster goes from road warrior to ocean view happy hour in seconds.</p>
+      </div>
+      <div class="highlight-card">
+        <img src="Assets/foley/highlights/IMG_20200324_200757.jpg" alt="Design" class="highlight-card__img" loading="lazy" />
+        <h3 class="highlight-card__title">Design</h3>
+        <p class="highlight-card__body"><em>It's all in the details.</em><br><br>With hand routed vents, two tone stain patterns, custom covers for all mechanical aspects and meticulously cared for surfaces, Foley is art on wheels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery section -->
+  <section class="features">
+    <h2 class="features__heading">Ready to be Wowed?</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/01-IMG_20200324_203827.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/02-IMG_20200324_203950.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/03-IMG_20200324_203809.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/04-IMG_20200324_203724.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/05-IMG_20200324_200835.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/06-IMG_20200324_203619.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/07-IMG_20200324_200614.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/08-IMG_20200324_200631.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/09-IMG_20200324_200640.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/10-IMG_20200324_200709.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/11-IMG_20200324_200542.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/12-IMG_20200324_203431.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/13-IMG_20200324_203417.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/14-IMG_20200324_200757.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/15-IMG_20200324_200808.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/16-IMG_20200324_201003.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/17-IMG_20200324_201017.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/18-IMG_20200324_201039.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/19-IMG_20200324_201159.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/20-IMG_20200324_201228.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/21-IMG_20200324_201433.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/22-IMG_20200324_201443.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/23-IMG_20200324_201517.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/24-IMG_20200303_180319.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/25-IMG_20200324_201629.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/26-IMG_20200324_201719.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/27-IMG_20200324_201327.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/28-IMG_20200324_202120.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/29-IMG_20200324_202135.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/30-IMG_20200324_202352.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/31-IMG_20200324_203004.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/32-IMG_20200324_203500.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/33-IMG_20200324_200922.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/34-IMG_20200324_202253.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/35-IMG_20200324_202320.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/36-IMG_20200324_203038.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/37-IMG_20200324_203101.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/38-IMG_20200324_201059.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/39-IMG_20200324_203159.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/40-IMG_20200324_203221.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/41-IMG_20200324_203334.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/42-IMG_20200324_203353.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/43-IMG_20200324_203926.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/44-IMG_20200324_203902.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/45-IMG_20200324_203736.jpg" alt="" loading="lazy" /></div>
+      <div class="gallery-grid__item"><img src="Assets/foley/gallery/46-IMG_20200324_204255.jpg" alt="" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lightbox__prev" id="lbPrev" aria-label="Previous">&#8592;</button>
+    <div class="lightbox__img-wrap">
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+    </div>
+    <button class="lightbox__next" id="lbNext" aria-label="Next">&#8594;</button>
+    <div class="lightbox__counter" id="lbCounter"></div>
+  </div>
+
+  <!-- Back link -->
+  <div class="van-detail__back">
+    <a href="vans.html">← Back to Gallery</a>
+  </div>
+
   <footer class="site-footer">
-    <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
-    <div class="footer__social" aria-label="Social media links">
-      <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-      </a>
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
+      <div class="footer__social" aria-label="Social media links">
+        <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+  
     </div>
   </footer>
 
   <script>
     document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    (() => {
+      const images = Array.from(document.querySelectorAll('#galleryGrid .gallery-grid__item:not(.gallery-grid__item--placeholder) img')).map(img => img.src);
+      const lightbox = document.getElementById('lightbox');
+      const lbImg    = document.getElementById('lbImg');
+      const lbCounter= document.getElementById('lbCounter');
+      let current = 0;
+
+      function open(index) {
+        if (!images.length) return;
+        current = index;
+        lbImg.src = images[current];
+        lbImg.alt = `Photo ${current + 1}`;
+        lbCounter.textContent = `${current + 1} / ${images.length}`;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+      function prev() { open((current - 1 + images.length) % images.length); }
+      function next() { open((current + 1) % images.length); }
+
+      document.querySelectorAll('#galleryGrid .gallery-grid__item:not(.gallery-grid__item--placeholder)').forEach((item, i) => {
+        item.addEventListener('click', () => open(i));
+      });
+
+      document.getElementById('lbClose').addEventListener('click', close);
+      document.getElementById('lbPrev').addEventListener('click', prev);
+      document.getElementById('lbNext').addEventListener('click', next);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'ArrowRight') next();
+      });
+    })();
+
     const burger = document.getElementById('burgerBtn');
     const drawer = document.getElementById('mobileDrawer');
     const nav    = document.getElementById('mainNav');
+
     burger.addEventListener('click', () => {
       const open = burger.getAttribute('aria-expanded') === 'true';
       burger.setAttribute('aria-expanded', String(!open));

@@ -81,43 +81,18 @@
 
     .nav__logo {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       text-decoration: none;
-      flex-shrink: 0;
-      letter-spacing: 0.02em;
     }
 
-    .nav__logo-primary {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--text);
-      line-height: 1;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
+    .nav__logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      transition: opacity 0.2s;
     }
 
-    .nav__logo-slash {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      color: var(--accent);
-      line-height: 1;
-      margin: 0 4px;
-    }
-
-    .nav__logo-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      align-self: center;
-      padding-top: 2px;
-      transition: color 0.2s;
-    }
-
-    .nav__logo:hover .nav__logo-primary { color: #fff; }
-    .nav__logo:hover .nav__logo-sub     { color: var(--text); }
+    .nav__logo:hover .nav__logo-img { opacity: 0.85; }
 
     .nav__links {
       display: flex;
@@ -183,6 +158,7 @@
 
     /* suppress the sweep-underline ::after on the dropdown trigger */
     .nav__dropdown-wrap > a::after { display: none; }
+    .nav__dropdown-wrap > a.active::after { display: block; }
 
     .nav__dropdown {
       position: absolute;
@@ -412,28 +388,97 @@
       padding: 64px 32px 80px;
     }
 
+    .van-detail__hero-wrap {
+      position: relative;
+      margin-bottom: 48px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
     .van-detail__hero {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
+      object-position: center center;
       display: block;
-      margin-bottom: 48px;
+    }
+
+    .van-detail__sold {
+      position: absolute;
+      top: 52px;
+      right: -60px;
+      width: 240px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-align: center;
+      padding: 8px 0;
+      transform: rotate(45deg);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     }
 
     .van-detail__body {
       max-width: 720px;
+      margin: 0 auto;
+      text-align: left;
     }
 
     .van-detail__body p {
       font-family: 'Barlow', sans-serif;
       font-weight: 300;
       font-size: 1.05rem;
-      line-height: 1.4;
+      line-height: 1.75;
+      color: rgba(232,224,214,0.8);
+    }
+
+    .van-detail__body p + p {
+      margin-top: 1.4em;
+    }
+
+    .van-detail__body strong {
+      font-weight: 500;
       color: var(--text);
     }
 
+    .van-detail__body a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .van-detail__body a:hover {
+      color: var(--accent-lt);
+    }
+
+    /* ── Video ── */
+    .van-video {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+
+    .van-video__embed {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .van-video__embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
     .van-detail__back {
-      margin-top: 48px;
+      max-width: 720px;
+      margin: 48px auto 0;
     }
 
     .van-detail__back a {
@@ -452,16 +497,281 @@
     }
 
     /* ══════════════════════════════════════════
+       FEATURES TEXT
+    ══════════════════════════════════════════ */
+    .features-text {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
+
+    .features-text__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .features-text__subheading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin: 28px 0 10px;
+    }
+
+    .features-text__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .features-text__list li {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      color: rgba(232,224,214,0.75);
+      padding: 10px 0 10px 16px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .features-text__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .features-text__list { grid-template-columns: 1fr; }
+    }
+
+    .features-text__body {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(232,224,214,0.8);
+    }
+
+    /* ══════════════════════════════════════════
+       FEATURES / GALLERY
+    ══════════════════════════════════════════ */
+    .features {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 96px;
+    }
+
+    .features__heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .gallery-grid__item {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--surface);
+      position: relative;
+    }
+
+    .gallery-grid__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .gallery-grid__item:hover img {
+      transform: scale(1.06);
+    }
+
+    .gallery-grid__item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(200,87,27,0);
+      transition: background 0.3s;
+      pointer-events: none;
+    }
+
+    .gallery-grid__item:hover::after {
+      background: rgba(200,87,27,0.08);
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 540px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+      .features { padding: 0 16px 64px; }
+    }
+
+    /* ── Gallery placeholder ── */
+    .gallery-grid__item--placeholder {
+      background: var(--surface);
+      border: 1px dashed rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: default;
+    }
+
+    .gallery-grid__item--placeholder::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.2)' stroke-width='1.5'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E") center/18px no-repeat;
+    }
+
+    .gallery-grid__item--placeholder span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+    }
+
+    .gallery-grid__item--placeholder:hover img { transform: none; }
+    .gallery-grid__item--placeholder:hover::after { background: none; }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,0.93);
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox__img-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox__img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+      display: block;
+      user-select: none;
+    }
+
+    .lightbox__close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 1.2rem;
+      transition: background 0.2s;
+      z-index: 9001;
+    }
+    .lightbox__close:hover { background: rgba(255,255,255,0.16); }
+
+    .lightbox__prev,
+    .lightbox__next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 1.2rem;
+      transition: background 0.2s;
+      z-index: 9001;
+      user-select: none;
+    }
+    .lightbox__prev { left: 20px; }
+    .lightbox__next { right: 20px; }
+    .lightbox__prev:hover,
+    .lightbox__next:hover { background: rgba(255,255,255,0.18); }
+
+    .lightbox__counter {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      z-index: 9001;
+    }
+
+    /* ══════════════════════════════════════════
        FOOTER
     ══════════════════════════════════════════ */
     .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer__inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 20px 32px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
     }
 
     .footer__copy {
@@ -504,9 +814,7 @@
     <div class="nav__inner">
 
       <a href="index.html" class="nav__logo" aria-label="California Custom Vans — home">
-        <span class="nav__logo-primary">California</span>
-        <span class="nav__logo-slash">/</span>
-        <span class="nav__logo-sub">Custom Vans</span>
+        <img src="Assets/ccv-logo-light.png" alt="California Custom Vans" class="nav__logo-img" />
       </a>
 
       <ul class="nav__links" role="list">
@@ -525,7 +833,15 @@
             <li><a href="ethel.html">Ethel</a></li>
           </ul>
         </li>
-        <li><a href="news.html">Press &amp; Media</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="news.html">Press &amp; Media</a>
+          <ul class="nav__dropdown">
+            <li><a href="https://sdvoyager.com/interview/inspiring-conversations-with-bradley-piersons-of-california-custom-vans/" target="_blank" rel="noopener noreferrer">SD Voyager Feature</a></li>
+            <li><a href="https://shoutoutsocal.com/meet-brad-piersons-custom-van-builder/" target="_blank" rel="noopener noreferrer">Shoutout SoCal Interview</a></li>
+            <li><a href="https://www.youtube.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV YouTube</a></li>
+            <li><a href="https://www.instagram.com/californiacustomvans" target="_blank" rel="noopener noreferrer">CCV Instagram</a></li>
+          </ul>
+        </li>
         <li><a href="about.html">About</a></li>
         <li class="nav__cta"><a href="contact.html">Contact</a></li>
       </ul>
@@ -567,35 +883,431 @@
     </div>
 
     <section class="van-detail">
-      <img class="van-detail__hero" src="Assets/C4A1230.jpg" alt="Tanner" />
-      <div class="van-detail__body">
-        <p>How does dining for 6, sleeping for 3, heated indoor and outdoor showers, power-a-plenty, an upright fridge and rooracks sound? Good? Great!</p>
+      <div class="van-detail__hero-wrap">
+        <img class="van-detail__hero" src="Assets/Tanner/01-C4A1238.jpg" alt="Tanner" />
+        <div class="van-detail__sold">Sold</div>
       </div>
-      <div class="van-detail__back">
-        <a href="vans.html">← Back to Gallery</a>
+      <div class="van-detail__body">
+        <p>Tanner (I know, I know, another creative wonder of nomenclature) is an open concept, modern camper built for indoor congregation and outdoor exploration alike. Throughout the build you will find a host of natural woods showcasing phenomenal grain structure from responsibly sourced lumber. Set off by luxurious black stained cabinetry, with just a hint of transparency to let you know it's the good stuff, Tanner is pure eye candy. Combine that with luxury hardware and a truly decadent backsplash and a high-end sound system, this little home on wheels is much more than just a place to rest your head.</p>
+        <p>Featuring a dinette style bed that easily morphs between sleeping for two and dining for 6, this build also accommodates sleeping for a third camper with a hidden slide-out, making Tanner perfect for small families and guests... Ok, maybe don't bring Aunt Sue. Sorry Aunt Sue but, you snore and think the woods are "yucky." Featuring my proprietary Hideaway Shower and an outdoor shower (both with hot water), a spacious front access fridge / freezer, overhead storage galore and a utilitarian roof system with a stylish steel fairing, this luxury home on wheels feels spacious and grande while giving you the modern amenities needed for an adventurous life on the road.</p>
+        <p>When it comes to construction and materials robust is a must. With 1/2" Maple ply walls, 3/4" subfloor and 3/4" ceiling planks, Tanner's shell is built for the long haul. With a solid base in place nearly every other piece of furniture inside is built with 3/4" Maple plywood and coated with eco friendly water-based polyurethane for true longevity. Accompanied by solid butcher block bench and countertops, the highest quality luxury vinyl plank flooring and load bearing drawer slides for peace of mind.</p>
+        <p>Feeling a little dirty? An outdoor shower provides fresh, warm water to rinse off the dust and dirt of an amazing day in nature. Feeling a little shy? Simply flip open the countertop to reveal a 24" square shower pan with luxurious walls. Throw up the shower curtain, grab the extra long sink faucet and wash your dirty bits in the comfort of your home on wheels. It should be noted that the shower pan is also the perfect place for your portable toilet. Just swing open the doors and use as needed.</p>
+        <p>Is that all? Of course not. Please take the time to look through the photos, examine the details and message with any questions. Thanks for looking!</p>
+        <p><strong>Please find a full list of features at the bottom of this page.</strong></p>
+        <p>If you're interested in purchasing Tanner please email Brad: <a href="mailto:californiacustomvans@gmail.com">californiacustomvans@gmail.com</a></p>
       </div>
     </section>
   </main>
 
+  <!-- ══ FEATURES / GALLERY ═══════════════════ -->
+  <section class="features">
+    <h2 class="features__heading">Ready to be Wowed?</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-grid__item" data-index="0"><img src="Assets/Tanner/01-C4A1238.jpg" alt="Tanner 1" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="1"><img src="Assets/Tanner/02-C4A1260.jpg" alt="Tanner 2" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="2"><img src="Assets/Tanner/03-C4A1244.jpg" alt="Tanner 3" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="3"><img src="Assets/Tanner/04-C4A1257.jpg" alt="Tanner 4" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="4"><img src="Assets/Tanner/05-IMG_2522.jpg" alt="Tanner 5" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="5"><img src="Assets/Tanner/06-C4A1230.jpg" alt="Tanner 6" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="6"><img src="Assets/Tanner/07-C4A1226.jpg" alt="Tanner 7" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="7"><img src="Assets/Tanner/08-IMG_2250.jpg" alt="Tanner 8" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="8"><img src="Assets/Tanner/09-IMG_2260.jpg" alt="Tanner 9" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="9"><img src="Assets/Tanner/10-C4A1188.jpg" alt="Tanner 10" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="10"><img src="Assets/Tanner/11-C4A1232.jpg" alt="Tanner 11" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="11"><img src="Assets/Tanner/12-C4A1193.jpg" alt="Tanner 12" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="12"><img src="Assets/Tanner/13-C4A1196.jpg" alt="Tanner 13" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="13"><img src="Assets/Tanner/14-C4A1195.jpg" alt="Tanner 14" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="14"><img src="Assets/Tanner/15-IMG_2242.jpg" alt="Tanner 15" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="15"><img src="Assets/Tanner/16-IMG_2225.jpg" alt="Tanner 16" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="16"><img src="Assets/Tanner/17-C4A1194.jpg" alt="Tanner 17" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="17"><img src="Assets/Tanner/18-C4A1208.jpg" alt="Tanner 18" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="18"><img src="Assets/Tanner/19-C4A1209.jpg" alt="Tanner 19" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="19"><img src="Assets/Tanner/20-C4A1201.jpg" alt="Tanner 20" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="20"><img src="Assets/Tanner/21-IMG_2778.jpg" alt="Tanner 21" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="21"><img src="Assets/Tanner/22-C4A1205.jpg" alt="Tanner 22" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="22"><img src="Assets/Tanner/23-IMG_2768.jpg" alt="Tanner 23" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="23"><img src="Assets/Tanner/24-IMG_2769.jpg" alt="Tanner 24" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="24"><img src="Assets/Tanner/25-C4A1228.jpg" alt="Tanner 25" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="25"><img src="Assets/Tanner/26-C4A1220.jpg" alt="Tanner 26" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="26"><img src="Assets/Tanner/27-C4A1211.jpg" alt="Tanner 27" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="27"><img src="Assets/Tanner/28-C4A1222.jpg" alt="Tanner 28" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="28"><img src="Assets/Tanner/29-C4A1254.jpg" alt="Tanner 29" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="29"><img src="Assets/Tanner/30-IMG_2246.jpg" alt="Tanner 30" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="30"><img src="Assets/Tanner/31-IMG_2221.jpg" alt="Tanner 31" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="31"><img src="Assets/Tanner/32-IMG_2234.jpg" alt="Tanner 32" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="32"><img src="Assets/Tanner/33-IMG_2253.jpg" alt="Tanner 33" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="33"><img src="Assets/Tanner/34-IMG_2018.jpg" alt="Tanner 34" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="34"><img src="Assets/Tanner/35-IMG_2237.jpg" alt="Tanner 35" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="35"><img src="Assets/Tanner/36-IMG_2245.jpg" alt="Tanner 36" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="36"><img src="Assets/Tanner/37-IMG_2249.jpg" alt="Tanner 37" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="37"><img src="Assets/Tanner/38-IMG_2254.jpg" alt="Tanner 38" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="38"><img src="Assets/Tanner/39-Tanner-Window-Sticker-scaled.jpeg" alt="Tanner 39" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- ══ LIGHTBOX ══════════════════════════════ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox__close" id="lbClose" aria-label="Close">&#10005;</button>
+    <button class="lightbox__prev" id="lbPrev" aria-label="Previous image">&#8592;</button>
+    <div class="lightbox__img-wrap">
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+    </div>
+    <button class="lightbox__next" id="lbNext" aria-label="Next image">&#8594;</button>
+    <div class="lightbox__counter" id="lbCounter"></div>
+  </div>
+
+  <!-- ══ FEATURES TEXT ════════════════════════ -->
+  <section class="features-text">
+    <h2 class="features-text__heading">Features</h2>
+    <p class="features-text__body">This van includes an extended factory warranty, roadside assistance, ceramic coating from the dealership, 5 key fobs and has under 100 miles on it. Please find the van specs in the photos.</p>
+    <h3 class="features-text__subheading">Van Specs</h3>
+    <p class="features-text__body">Under 100 mi. Mercedes Factory Warranty. 5 Keys. Ceramic Coating. Driver &amp; Passenger Swivel seats. Heated seats. Comfort Package. Special Paint Package. Exterior Lighting Package. Chrome Grille Package. Tow Package. Driver Convenience Package. Active Lane Assist.</p>
+
+    <h3 class="features-text__subheading">Construction</h3>
+    <ul class="features-text__list">
+      <li>Maple Walls</li>
+      <li>Pine T&amp;G Ceiling</li>
+      <li>Luxury Vinyl Plank Flooring — Waterproof &amp; Scratch Proof</li>
+      <li>Pine &amp; Maple Overhead Cabinets</li>
+      <li>Maple Kitchen and Bed Cabinetry</li>
+      <li>Heavy Duty Drawer Slides</li>
+      <li>Steel Slam Latches</li>
+      <li>Lagun Swivel Table</li>
+      <li>Hideaway Shower — Kitchen Location</li>
+      <li>Dinette Style Seating &amp; Bed — Sleeps 2</li>
+      <li>Additional Convertible Bed — Sleeps 1</li>
+      <li>Passenger &amp; Driver Swivel Seat</li>
+      <li>Fridge Isotherm 85 (3 cubic feet) with Freezer Compartment</li>
+      <li>Tinted Windows</li>
+      <li>CR Laurence T Vent Drivers Side &amp; Kitchen Window</li>
+      <li>CR Laurence T-Vent Window On Sliding Door</li>
+      <li>Custom Insulated Window Covers</li>
+    </ul>
+
+    <h3 class="features-text__subheading">Electrical</h3>
+    <ul class="features-text__list">
+      <li>Premium Rear Sound System with Kenwood Bluetooth Amplifier and Polk Audio Speakers</li>
+      <li>3000W Pure Sine Wave Inverter Charger — Renogy</li>
+      <li>20A Charge Controller — Renogy</li>
+      <li>100 Ah Li Battery — 2</li>
+      <li>120v GFI Outlet — 1</li>
+      <li>USB Outlets — 4</li>
+      <li>Bedside Reading Lights — 2</li>
+      <li>Overhead LEDs with Dimmer — 6</li>
+      <li>Battery / Charging Monitor — Renogy</li>
+      <li>Keyline Alternator Isolator Charger</li>
+      <li>30A Shorepower Inlet</li>
+      <li>100W Solar Panels — 2</li>
+      <li>MaxxFan Deluxe Roof Vent With Remote</li>
+    </ul>
+
+    <h3 class="features-text__subheading">Plumbing</h3>
+    <ul class="features-text__list">
+      <li>Under Mounted Stainless Sink</li>
+      <li>Industrial Style Faucet with Extension</li>
+      <li>3.2 GPM Shurflo Water Pump</li>
+      <li>21 Gal Fresh and Gray Water Tanks</li>
+      <li>Hideaway Shower At Kitchen Location</li>
+      <li>Outdoor Shower At Rear</li>
+    </ul>
+
+    <h3 class="features-text__subheading">Insulation</h3>
+    <ul class="features-text__list">
+      <li>3M Thinsulate insulation in the walls and ceiling</li>
+      <li>Reflective thermal insulation under 3/4" OSB subfloor</li>
+    </ul>
+
+    <h3 class="features-text__subheading">Exterior</h3>
+    <ul class="features-text__list">
+      <li>Flatline LoPro Roof Rack</li>
+      <li>Flatline Side-Mount Ladder</li>
+      <li>Flatline Front Wind Fairing</li>
+      <li>Aftermarket Rims</li>
+      <li>Really Neat Paint Color I can't Remember The Actual Name Of So I Call It "Tan"</li>
+    </ul>
+
+    <h3 class="features-text__subheading">Soundproofing</h3>
+    <ul class="features-text__list">
+      <li>3M Thinsulate Sound Blocking Grade</li>
+      <li>Kilmat Sound Deadening on the Walls, Ceiling &amp; Wheel Wells</li>
+    </ul>
+  </section>
+
+  <!-- ══ DETAILS GALLERY ══════════════════════ -->
+  <section class="features">
+    <h2 class="features__heading">Details</h2>
+    <div class="gallery-grid" id="detailsGrid">
+      <div class="gallery-grid__item" data-index="0" data-gallery="details"><img src="Assets/Tanner/details/01-IMG_2507.jpg" alt="Detail 1" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="1" data-gallery="details"><img src="Assets/Tanner/details/02-IMG_2510.jpg" alt="Detail 2" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="2" data-gallery="details"><img src="Assets/Tanner/details/03-IMG_2539.jpg" alt="Detail 3" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="3" data-gallery="details"><img src="Assets/Tanner/details/04-IMG_2511.jpg" alt="Detail 4" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="4" data-gallery="details"><img src="Assets/Tanner/details/05-IMG_2464.jpg" alt="Detail 5" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="5" data-gallery="details"><img src="Assets/Tanner/details/06-IMG_2465.jpg" alt="Detail 6" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="6" data-gallery="details"><img src="Assets/Tanner/details/07-IMG_2466.jpg" alt="Detail 7" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="7" data-gallery="details"><img src="Assets/Tanner/details/08-IMG_2468.jpg" alt="Detail 8" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="8" data-gallery="details"><img src="Assets/Tanner/details/09-IMG_2480.jpg" alt="Detail 9" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="9" data-gallery="details"><img src="Assets/Tanner/details/10-IMG_2473.jpg" alt="Detail 10" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="10" data-gallery="details"><img src="Assets/Tanner/details/11-IMG_2486.jpg" alt="Detail 11" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="11" data-gallery="details"><img src="Assets/Tanner/details/12-IMG_2474.jpg" alt="Detail 12" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="12" data-gallery="details"><img src="Assets/Tanner/details/13-IMG_2475.jpg" alt="Detail 13" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="13" data-gallery="details"><img src="Assets/Tanner/details/14-IMG_2479.jpg" alt="Detail 14" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="14" data-gallery="details"><img src="Assets/Tanner/details/15-IMG_2476.jpg" alt="Detail 15" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="15" data-gallery="details"><img src="Assets/Tanner/details/16-IMG_2483.jpg" alt="Detail 16" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="16" data-gallery="details"><img src="Assets/Tanner/details/17-IMG_2484.jpg" alt="Detail 17" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="17" data-gallery="details"><img src="Assets/Tanner/details/18-IMG_2524.jpg" alt="Detail 18" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="18" data-gallery="details"><img src="Assets/Tanner/details/19-IMG_2485.jpg" alt="Detail 19" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="19" data-gallery="details"><img src="Assets/Tanner/details/20-IMG_2525.jpg" alt="Detail 20" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="20" data-gallery="details"><img src="Assets/Tanner/details/21-IMG_2508.jpg" alt="Detail 21" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="21" data-gallery="details"><img src="Assets/Tanner/details/22-IMG_2509.jpg" alt="Detail 22" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="22" data-gallery="details"><img src="Assets/Tanner/details/23-IMG_2514.jpg" alt="Detail 23" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="23" data-gallery="details"><img src="Assets/Tanner/details/24-IMG_2515.jpg" alt="Detail 24" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="24" data-gallery="details"><img src="Assets/Tanner/details/25-IMG_2493.jpg" alt="Detail 25" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="25" data-gallery="details"><img src="Assets/Tanner/details/26-IMG_2491.jpg" alt="Detail 26" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="26" data-gallery="details"><img src="Assets/Tanner/details/27-IMG_2492.jpg" alt="Detail 27" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="27" data-gallery="details"><img src="Assets/Tanner/details/28-IMG_2495.jpg" alt="Detail 28" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="28" data-gallery="details"><img src="Assets/Tanner/details/29-IMG_2518.jpg" alt="Detail 29" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="29" data-gallery="details"><img src="Assets/Tanner/details/30-IMG_2499.jpg" alt="Detail 30" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="30" data-gallery="details"><img src="Assets/Tanner/details/31-IMG_2501.jpg" alt="Detail 31" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="31" data-gallery="details"><img src="Assets/Tanner/details/32-IMG_2530.jpg" alt="Detail 32" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="32" data-gallery="details"><img src="Assets/Tanner/details/33-IMG_2531.jpg" alt="Detail 33" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="33" data-gallery="details"><img src="Assets/Tanner/details/34-IMG_2490.jpg" alt="Detail 34" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="34" data-gallery="details"><img src="Assets/Tanner/details/35-IMG_2489.jpg" alt="Detail 35" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="35" data-gallery="details"><img src="Assets/Tanner/details/36-IMG_2520.jpg" alt="Detail 36" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="36" data-gallery="details"><img src="Assets/Tanner/details/37-IMG_2522.jpg" alt="Detail 37" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- ══ PROGRESS GALLERY ═══════════════════════ -->
+  <section class="features">
+    <h2 class="features__heading">Progress</h2>
+    <div class="gallery-grid" id="progressGrid">
+      <div class="gallery-grid__item" data-index="0" data-gallery="progress"><img src="Assets/Tanner/progress/001-IMG_2266.jpg" alt="Progress 1" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="1" data-gallery="progress"><img src="Assets/Tanner/progress/002-IMG_2233.jpg" alt="Progress 2" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="2" data-gallery="progress"><img src="Assets/Tanner/progress/003-IMG_2234.jpg" alt="Progress 3" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="3" data-gallery="progress"><img src="Assets/Tanner/progress/004-IMG_2245.jpg" alt="Progress 4" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="4" data-gallery="progress"><img src="Assets/Tanner/progress/005-IMG_2243.jpg" alt="Progress 5" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="5" data-gallery="progress"><img src="Assets/Tanner/progress/006-IMG_2221.jpg" alt="Progress 6" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="6" data-gallery="progress"><img src="Assets/Tanner/progress/007-IMG_2264.jpg" alt="Progress 7" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="7" data-gallery="progress"><img src="Assets/Tanner/progress/008-IMG_2223.jpg" alt="Progress 8" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="8" data-gallery="progress"><img src="Assets/Tanner/progress/009-IMG_2242.jpg" alt="Progress 9" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="9" data-gallery="progress"><img src="Assets/Tanner/progress/010-IMG_2225.jpg" alt="Progress 10" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="10" data-gallery="progress"><img src="Assets/Tanner/progress/011-IMG_2172.jpg" alt="Progress 11" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="11" data-gallery="progress"><img src="Assets/Tanner/progress/012-IMG_2260.jpg" alt="Progress 12" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="12" data-gallery="progress"><img src="Assets/Tanner/progress/013-IMG_2259.jpg" alt="Progress 13" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="13" data-gallery="progress"><img src="Assets/Tanner/progress/014-IMG_2239.jpg" alt="Progress 14" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="14" data-gallery="progress"><img src="Assets/Tanner/progress/015-IMG_1912.jpg" alt="Progress 15" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="15" data-gallery="progress"><img src="Assets/Tanner/progress/016-IMG_2237.jpg" alt="Progress 16" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="16" data-gallery="progress"><img src="Assets/Tanner/progress/017-IMG_2236.jpg" alt="Progress 17" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="17" data-gallery="progress"><img src="Assets/Tanner/progress/018-IMG_2267.jpg" alt="Progress 18" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="18" data-gallery="progress"><img src="Assets/Tanner/progress/019-IMG_2246.jpg" alt="Progress 19" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="19" data-gallery="progress"><img src="Assets/Tanner/progress/020-IMG_2247.jpg" alt="Progress 20" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="20" data-gallery="progress"><img src="Assets/Tanner/progress/021-IMG_2250.jpg" alt="Progress 21" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="21" data-gallery="progress"><img src="Assets/Tanner/progress/022-IMG_2249.jpg" alt="Progress 22" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="22" data-gallery="progress"><img src="Assets/Tanner/progress/023-IMG_2253.jpg" alt="Progress 23" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="23" data-gallery="progress"><img src="Assets/Tanner/progress/024-IMG_2254.jpg" alt="Progress 24" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="24" data-gallery="progress"><img src="Assets/Tanner/progress/025-IMG_2018.jpg" alt="Progress 25" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="25" data-gallery="progress"><img src="Assets/Tanner/progress/026-IMG_1542.jpg" alt="Progress 26" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="26" data-gallery="progress"><img src="Assets/Tanner/progress/027-IMG_1526.jpg" alt="Progress 27" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="27" data-gallery="progress"><img src="Assets/Tanner/progress/028-IMG_1541.jpg" alt="Progress 28" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="28" data-gallery="progress"><img src="Assets/Tanner/progress/029-IMG_1528.jpg" alt="Progress 29" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="29" data-gallery="progress"><img src="Assets/Tanner/progress/030-IMG_1539.jpg" alt="Progress 30" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="30" data-gallery="progress"><img src="Assets/Tanner/progress/031-IMG_1538.jpg" alt="Progress 31" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="31" data-gallery="progress"><img src="Assets/Tanner/progress/032-IMG_1476.jpg" alt="Progress 32" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="32" data-gallery="progress"><img src="Assets/Tanner/progress/033-IMG_1509.jpg" alt="Progress 33" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="33" data-gallery="progress"><img src="Assets/Tanner/progress/034-IMG_1508.jpg" alt="Progress 34" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="34" data-gallery="progress"><img src="Assets/Tanner/progress/035-IMG_1497.jpg" alt="Progress 35" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="35" data-gallery="progress"><img src="Assets/Tanner/progress/036-IMG_1537.jpg" alt="Progress 36" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="36" data-gallery="progress"><img src="Assets/Tanner/progress/037-IMG_1388.jpg" alt="Progress 37" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="37" data-gallery="progress"><img src="Assets/Tanner/progress/038-IMG_1529.jpg" alt="Progress 38" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="38" data-gallery="progress"><img src="Assets/Tanner/progress/039-IMG_1496.jpg" alt="Progress 39" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="39" data-gallery="progress"><img src="Assets/Tanner/progress/040-IMG_1491.jpg" alt="Progress 40" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="40" data-gallery="progress"><img src="Assets/Tanner/progress/041-IMG_1492.jpg" alt="Progress 41" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="41" data-gallery="progress"><img src="Assets/Tanner/progress/042-69267662096__BA69C781-2D6C-45DA-98B3-A4BA64510E8E.jpg" alt="Progress 42" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="42" data-gallery="progress"><img src="Assets/Tanner/progress/043-IMG_1253.jpg" alt="Progress 43" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="43" data-gallery="progress"><img src="Assets/Tanner/progress/044-IMG_1243.jpg" alt="Progress 44" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="44" data-gallery="progress"><img src="Assets/Tanner/progress/045-IMG_1242.jpg" alt="Progress 45" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="45" data-gallery="progress"><img src="Assets/Tanner/progress/046-IMG_1241.jpg" alt="Progress 46" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="46" data-gallery="progress"><img src="Assets/Tanner/progress/047-IMG_1238.jpg" alt="Progress 47" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="47" data-gallery="progress"><img src="Assets/Tanner/progress/048-IMG_1237.jpg" alt="Progress 48" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="48" data-gallery="progress"><img src="Assets/Tanner/progress/049-IMG_1103.jpg" alt="Progress 49" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="49" data-gallery="progress"><img src="Assets/Tanner/progress/050-IMG_1100.jpg" alt="Progress 50" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="50" data-gallery="progress"><img src="Assets/Tanner/progress/051-IMG_0935.jpg" alt="Progress 51" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="51" data-gallery="progress"><img src="Assets/Tanner/progress/052-IMG_0927.jpg" alt="Progress 52" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="52" data-gallery="progress"><img src="Assets/Tanner/progress/053-IMG_0932.jpg" alt="Progress 53" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="53" data-gallery="progress"><img src="Assets/Tanner/progress/054-IMG_1251.jpg" alt="Progress 54" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="54" data-gallery="progress"><img src="Assets/Tanner/progress/055-IMG_1470.jpg" alt="Progress 55" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="55" data-gallery="progress"><img src="Assets/Tanner/progress/056-IMG_1469.jpg" alt="Progress 56" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="56" data-gallery="progress"><img src="Assets/Tanner/progress/057-IMG_1070.jpg" alt="Progress 57" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="57" data-gallery="progress"><img src="Assets/Tanner/progress/058-IMG_1091.jpg" alt="Progress 58" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="58" data-gallery="progress"><img src="Assets/Tanner/progress/059-IMG_1087.jpg" alt="Progress 59" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="59" data-gallery="progress"><img src="Assets/Tanner/progress/060-IMG_1089.jpg" alt="Progress 60" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="60" data-gallery="progress"><img src="Assets/Tanner/progress/061-IMG_0644.jpg" alt="Progress 61" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="61" data-gallery="progress"><img src="Assets/Tanner/progress/062-IMG_0643.jpg" alt="Progress 62" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="62" data-gallery="progress"><img src="Assets/Tanner/progress/063-IMG_0894.jpg" alt="Progress 63" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="63" data-gallery="progress"><img src="Assets/Tanner/progress/064-IMG_0566.jpg" alt="Progress 64" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="64" data-gallery="progress"><img src="Assets/Tanner/progress/065-IMG_0565.jpg" alt="Progress 65" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="65" data-gallery="progress"><img src="Assets/Tanner/progress/066-IMG_0563.jpg" alt="Progress 66" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="66" data-gallery="progress"><img src="Assets/Tanner/progress/067-IMG_0468.jpg" alt="Progress 67" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="67" data-gallery="progress"><img src="Assets/Tanner/progress/068-IMG_0415.jpg" alt="Progress 68" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="68" data-gallery="progress"><img src="Assets/Tanner/progress/069-IMG_0284.jpg" alt="Progress 69" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="69" data-gallery="progress"><img src="Assets/Tanner/progress/070-IMG_0282-2.jpg" alt="Progress 70" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="70" data-gallery="progress"><img src="Assets/Tanner/progress/071-IMG_0202-2.jpg" alt="Progress 71" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="71" data-gallery="progress"><img src="Assets/Tanner/progress/072-IMG_0201-2.jpg" alt="Progress 72" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="72" data-gallery="progress"><img src="Assets/Tanner/progress/073-IMG_0199-2.jpg" alt="Progress 73" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="73" data-gallery="progress"><img src="Assets/Tanner/progress/074-IMG_0190-2.jpg" alt="Progress 74" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="74" data-gallery="progress"><img src="Assets/Tanner/progress/075-6111461D-CC49-4C78-A2A3-DB99AD2A4CFF.jpg" alt="Progress 75" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="75" data-gallery="progress"><img src="Assets/Tanner/progress/076-IMG_9743.jpg" alt="Progress 76" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="76" data-gallery="progress"><img src="Assets/Tanner/progress/077-IMG_9740.jpg" alt="Progress 77" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="77" data-gallery="progress"><img src="Assets/Tanner/progress/078-IMG_9112.jpg" alt="Progress 78" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="78" data-gallery="progress"><img src="Assets/Tanner/progress/079-IMG_9111.jpg" alt="Progress 79" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="79" data-gallery="progress"><img src="Assets/Tanner/progress/080-IMG_9110.jpg" alt="Progress 80" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="80" data-gallery="progress"><img src="Assets/Tanner/progress/081-IMG_9109.jpg" alt="Progress 81" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="81" data-gallery="progress"><img src="Assets/Tanner/progress/082-IMG_0282.jpg" alt="Progress 82" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="82" data-gallery="progress"><img src="Assets/Tanner/progress/083-IMG_0227.jpg" alt="Progress 83" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="83" data-gallery="progress"><img src="Assets/Tanner/progress/084-IMG_0225.jpg" alt="Progress 84" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="84" data-gallery="progress"><img src="Assets/Tanner/progress/085-IMG_0216.jpg" alt="Progress 85" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="85" data-gallery="progress"><img src="Assets/Tanner/progress/086-IMG_0203.jpg" alt="Progress 86" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="86" data-gallery="progress"><img src="Assets/Tanner/progress/087-IMG_0202.jpg" alt="Progress 87" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="87" data-gallery="progress"><img src="Assets/Tanner/progress/088-IMG_0201.jpg" alt="Progress 88" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="88" data-gallery="progress"><img src="Assets/Tanner/progress/089-IMG_0199.jpg" alt="Progress 89" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="89" data-gallery="progress"><img src="Assets/Tanner/progress/090-IMG_0190.jpg" alt="Progress 90" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="90" data-gallery="progress"><img src="Assets/Tanner/progress/091-IMG_9078.jpeg" alt="Progress 91" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="91" data-gallery="progress"><img src="Assets/Tanner/progress/092-IMG_9071.jpeg" alt="Progress 92" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="92" data-gallery="progress"><img src="Assets/Tanner/progress/093-IMG_9069.jpeg" alt="Progress 93" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="93" data-gallery="progress"><img src="Assets/Tanner/progress/094-IMG_9067.jpeg" alt="Progress 94" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="94" data-gallery="progress"><img src="Assets/Tanner/progress/095-IMG_9066.jpeg" alt="Progress 95" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="95" data-gallery="progress"><img src="Assets/Tanner/progress/096-IMG_9033.jpeg" alt="Progress 96" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="96" data-gallery="progress"><img src="Assets/Tanner/progress/097-IMG_9032.jpeg" alt="Progress 97" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="97" data-gallery="progress"><img src="Assets/Tanner/progress/098-IMG_9013.jpeg" alt="Progress 98" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="98" data-gallery="progress"><img src="Assets/Tanner/progress/099-IMG_8990.jpeg" alt="Progress 99" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="99" data-gallery="progress"><img src="Assets/Tanner/progress/100-IMG_8937.jpeg" alt="Progress 100" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="100" data-gallery="progress"><img src="Assets/Tanner/progress/101-IMG_8929.jpeg" alt="Progress 101" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="101" data-gallery="progress"><img src="Assets/Tanner/progress/102-IMG_8927.jpeg" alt="Progress 102" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="102" data-gallery="progress"><img src="Assets/Tanner/progress/103-IMG_8926.jpeg" alt="Progress 103" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="103" data-gallery="progress"><img src="Assets/Tanner/progress/104-IMG_8925.jpeg" alt="Progress 104" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="104" data-gallery="progress"><img src="Assets/Tanner/progress/105-IMG_8924.jpeg" alt="Progress 105" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="105" data-gallery="progress"><img src="Assets/Tanner/progress/106-IMG_8905.jpeg" alt="Progress 106" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="106" data-gallery="progress"><img src="Assets/Tanner/progress/107-IMG_8902.jpeg" alt="Progress 107" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="107" data-gallery="progress"><img src="Assets/Tanner/progress/108-IMG_8901.jpeg" alt="Progress 108" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="108" data-gallery="progress"><img src="Assets/Tanner/progress/109-IMG_8900.jpeg" alt="Progress 109" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="109" data-gallery="progress"><img src="Assets/Tanner/progress/110-IMG_8899.jpeg" alt="Progress 110" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="110" data-gallery="progress"><img src="Assets/Tanner/progress/111-IMG_8844.jpeg" alt="Progress 111" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="111" data-gallery="progress"><img src="Assets/Tanner/progress/112-IMG_8843.jpeg" alt="Progress 112" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="112" data-gallery="progress"><img src="Assets/Tanner/progress/113-IMG_8842.jpeg" alt="Progress 113" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="113" data-gallery="progress"><img src="Assets/Tanner/progress/114-newIMG_8652.jpg" alt="Progress 114" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="114" data-gallery="progress"><img src="Assets/Tanner/progress/115-newIMG_8655.jpg" alt="Progress 115" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="115" data-gallery="progress"><img src="Assets/Tanner/progress/116-IMG_8323.jpg" alt="Progress 116" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="116" data-gallery="progress"><img src="Assets/Tanner/progress/117-IMG_8310.jpg" alt="Progress 117" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="117" data-gallery="progress"><img src="Assets/Tanner/progress/118-IMG_8308.jpg" alt="Progress 118" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="118" data-gallery="progress"><img src="Assets/Tanner/progress/119-IMG_8273.jpg" alt="Progress 119" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="119" data-gallery="progress"><img src="Assets/Tanner/progress/120-IMG_8251.jpg" alt="Progress 120" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="120" data-gallery="progress"><img src="Assets/Tanner/progress/121-IMG_8213.jpg" alt="Progress 121" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="121" data-gallery="progress"><img src="Assets/Tanner/progress/122-IMG_8207.jpg" alt="Progress 122" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="122" data-gallery="progress"><img src="Assets/Tanner/progress/123-IMG_8206.jpg" alt="Progress 123" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="123" data-gallery="progress"><img src="Assets/Tanner/progress/124-IMG_8201.jpg" alt="Progress 124" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="124" data-gallery="progress"><img src="Assets/Tanner/progress/125-newIMG_8157.jpg" alt="Progress 125" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="125" data-gallery="progress"><img src="Assets/Tanner/progress/126-IMG_8198.jpg" alt="Progress 126" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="126" data-gallery="progress"><img src="Assets/Tanner/progress/127-IMG_8070.jpg" alt="Progress 127" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="127" data-gallery="progress"><img src="Assets/Tanner/progress/128-IMG_8069.jpg" alt="Progress 128" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="128" data-gallery="progress"><img src="Assets/Tanner/progress/129-IMG_7987.jpg" alt="Progress 129" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="129" data-gallery="progress"><img src="Assets/Tanner/progress/130-IMG_7986.jpg" alt="Progress 130" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="130" data-gallery="progress"><img src="Assets/Tanner/progress/131-IMG_7669.jpg" alt="Progress 131" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="131" data-gallery="progress"><img src="Assets/Tanner/progress/132-IMG_7629.jpg" alt="Progress 132" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="132" data-gallery="progress"><img src="Assets/Tanner/progress/133-IMG_7656.jpg" alt="Progress 133" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="133" data-gallery="progress"><img src="Assets/Tanner/progress/134-IMG_7655.jpg" alt="Progress 134" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="134" data-gallery="progress"><img src="Assets/Tanner/progress/135-67513436278__FE42A9FC-733F-4CF5-A727-257BD19279AA.jpg" alt="Progress 135" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="135" data-gallery="progress"><img src="Assets/Tanner/progress/136-IMG_8325.jpg" alt="Progress 136" loading="lazy" /></div>
+      <div class="gallery-grid__item" data-index="136" data-gallery="progress"><img src="Assets/Tanner/progress/137-IMG_7687.jpg" alt="Progress 137" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- ══ VIDEO ════════════════════════════════ -->
+  <section class="van-video">
+    <div class="van-video__embed">
+      <iframe
+        src="https://www.youtube.com/embed/9kY8i9igzjY"
+        title="Tanner — California Custom Vans"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- ══ BACK LINK ═════════════════════════════ -->
+  <div class="van-detail__back" style="width:100%;max-width:1440px;margin:0 auto;padding:0 32px 64px;">
+    <a href="vans.html">← Back to Gallery</a>
+  </div>
+
   <!-- ══ FOOTER ═══════════════════════════════ -->
   <footer class="site-footer">
-    <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
-    <div class="footer__social" aria-label="Social media links">
-      <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-        </svg>
-      </a>
-      <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-      </a>
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; <span id="footerYear"></span> California Custom Vans</p>
+      <div class="footer__social" aria-label="Social media links">
+        <a href="https://www.youtube.com/@CaliforniaCustomVans" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/californiacustomvans/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+          </svg>
+        </a>
+      </div>
+  
     </div>
   </footer>
 
   <script>
     document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // ── Lightbox ──────────────────────────────
+    (() => {
+      const images = Array.from(document.querySelectorAll('.gallery-grid__item img'))
+                          .map(img => img.src);
+      const lightbox = document.getElementById('lightbox');
+      const lbImg    = document.getElementById('lbImg');
+      const lbCounter= document.getElementById('lbCounter');
+      let current    = 0;
+
+      function open(index) {
+        current = index;
+        lbImg.src = images[current];
+        lbImg.alt = `Tanner ${current + 1}`;
+        lbCounter.textContent = `${current + 1} / ${images.length}`;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+
+      function prev() { open((current - 1 + images.length) % images.length); }
+      function next() { open((current + 1) % images.length); }
+
+      document.querySelectorAll('.gallery-grid__item').forEach(item => {
+        item.addEventListener('click', () => open(+item.dataset.index));
+      });
+
+      document.getElementById('lbClose').addEventListener('click', close);
+      document.getElementById('lbPrev').addEventListener('click', prev);
+      document.getElementById('lbNext').addEventListener('click', next);
+
+      // close on backdrop click
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
+
+      // keyboard
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape')      close();
+        if (e.key === 'ArrowLeft')   prev();
+        if (e.key === 'ArrowRight')  next();
+      });
+    })();
 
     const burger = document.getElementById('burgerBtn');
     const drawer = document.getElementById('mobileDrawer');
